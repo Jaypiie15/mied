@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Accounts extends Model
+class Dot extends Model
 {
-    protected $table = 'accounts_tbl';
+    //
 }

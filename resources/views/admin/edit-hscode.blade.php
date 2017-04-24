@@ -25,15 +25,15 @@
     <!-- Main content -->
     <section class="content">
   @if(Session::has('add'))
-    <script>swal("SUCCESS","Meat Cut Type Added!","success")</script>
+    <script>swal("SUCCESS","HS Code Added!","success")</script>
   @endif
     @if(Session::has('delete'))
-    <script>swal("SUCCESS","Meat Cut Type Deleted!","success")</script>
+    <script>swal("SUCCESS","HS Code Deleted!","success")</script>
   @endif
       <!-- Default box -->
       <div class="box">
         <div class="box-body">
-        <form method="POST" action="{{ route('add-code')}}">
+        <form method="POST" action="{{ route('add-code')}}" data-parsley-validate>
        
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-plus"></i> Add HS Code</button>
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
@@ -47,7 +47,7 @@
 
           <div class="form-group {{ $errors->has('code') ? 'has-error' : '' }}">
             <label for="message-text" class="control-label">HS Code:</label>
-             <input type="text" class="form-control" name="code" required>
+             <input type="text" class="form-control" name="code" required  data-parsley-length="[2, 100]">
           </div>
         @if($errors->has('code'))
           <span class="help-block">{{ $errors->first('code') }}</span>
@@ -81,7 +81,7 @@
             @foreach($codes as $code)
             <td>{{$code->hscode}}</td>
             <td>
-            <a href="{{ route('update-hscode', ['id'=>$code->id]) }}" class="btn btn-primary"><i class="fa fa-pencil"></i> Edit</a>
+            <a href="{{ route('update-hscode', ['id'=> Crypt::encrypt($code->id) ]) }}" class="btn btn-primary"><i class="fa fa-pencil"></i> Edit</a>
             <a href="{{ route('delete-hscode', ['id'=>$code->id]) }}" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</a>
             </td>
           </tr>

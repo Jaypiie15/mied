@@ -2,7 +2,7 @@
 
   <header class="main-header">
     <!-- Logo -->
-    <a href="dashboard.php" class="logo">
+    <a href="{{ route('dashboard') }}" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>MCC</b></span>
       <!-- logo for regular state and mobile devices -->
@@ -25,8 +25,10 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <span class="hidden-xs">Hello</span>
+            
+              <span class="hidden-xs"><label style="padding:10px;font-weight:bolder" class="label label-danger">Hello, Admin {{Auth::user()->firstname }} <i class="fa fa-caret-down"></i> </label></span>
             </a>
+            
             <ul class="dropdown-menu">
               <!-- User image -->
 
@@ -34,7 +36,7 @@
               <li class="user-body">
                 <div class="row">
                   <div class="col-xs-4">
-                    <a href="logout.php">Logout  <i class="fa fa-sign-out"></i></a>
+                    <a href="{{ route('admin-logout') }}">Logout  <i class="fa fa-sign-out"></i></a>
                   </div>
                 </div>
                 <!-- /.row -->
@@ -56,7 +58,7 @@
       <ul class="sidebar-menu">
 
         <li>
-          <a href="dashboard.php">
+          <a href="{{route('dashboard')}}">
             <i class="fa fa-dashboard"></i> <span>Dashboard</span>
 
           </a>
@@ -83,7 +85,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="admin.php"><i class="fa fa-circle-o"></i> Administrators</a></li>
+            <li><a href="{{ route('show-users') }}"><i class="fa fa-circle-o"></i> Administrators</a></li>
             <li><a href="{{ route('register') }}"><i class="fa fa-circle-o"></i> Add Users</a></li>
           </ul>
         </li>
@@ -111,8 +113,15 @@
         </li>
 
         <li>
-          <a href="edit-country.php">
+          <a href="{{ route('edit-country') }}">
             <i class="fa fa-pencil"></i> <span>Edit Country</span>
+
+          </a>
+        </li>
+
+        <li>
+          <a href="{{ route('edit-dots') }}">
+            <i class="fa fa-pencil"></i> <span>Edit Definition of Terms</span>
 
           </a>
         </li>

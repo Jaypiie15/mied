@@ -32,12 +32,12 @@
     <script>swal("SUCCESS","Successfully Added","success")</script>
   @endif
 
-    <form method="POST" action="{{ route('add-admin') }}" class="form-horizontal form-label-left" id="form">
+    <form method="POST" action="{{ route('add-admin') }}" class="form-horizontal form-label-left" id="form" data-parsley-validate>
 
     <div class="item form-group {{ $errors->has('last') ? 'has-error' : '' }}">
            <label class="control-label col-md-3 col-sm-3 col-xs-12">Lastname <span class="required">*</span></label>
     <div class="col-md-6 col-sm-6 col-xs-12"> 
-        <input type="text" class="form-control col-md-7 col-xs-12 " placeholder="Lastname" name="last">
+        <input type="text" class="form-control col-md-7 col-xs-12 " placeholder="Lastname" name="last" required  data-parsley-length="[2, 20]"  data-parsley-pattern="^[a-zA-Z ]+$" data-parsley-pattern-message="Invalid chracters. Please input Alphabet only">
         @if($errors->has('last'))
           <span class="help-block">{{ $errors->first('last') }}</span>
         @endif
@@ -47,7 +47,7 @@
     <div class="item form-group {{ $errors->has('first') ? 'has-error' : '' }}">
     <label class="control-label col-md-3 col-sm-3 col-xs-6">Firstname<span class="required">*</span></label>
     <div class="col-md-6 col-sm-6 col-xs-12"> 
-        <input type="text" class="form-control col-md-7 col-xs-12" placeholder="Firstname" name="first">
+        <input type="text" class="form-control col-md-7 col-xs-12" placeholder="Firstname" name="first" required  data-parsley-length="[2, 20]"  data-parsley-pattern="^[a-zA-Z ]+$" data-parsley-pattern-message="Invalid chracters. Please input Alphabet only">
         @if($errors->has('first'))
           <span class="help-block">{{ $errors->first('first') }}</span>
         @endif
@@ -58,7 +58,7 @@
     <div class="item form-group {{ $errors->has('middle') ? 'has-error' : '' }}">
     <label class="control-label col-md-3 col-sm-3 col-xs-6">Middlename<span class="required">*</span></label>
     <div class="col-md-6 col-sm-6 col-xs-12"> 
-        <input type="text" class="form-control col-md-7 col-xs-12" placeholder="Middlename" name="middle">
+        <input type="text" class="form-control col-md-7 col-xs-12" placeholder="Middlename" name="middle" required  data-parsley-length="[2, 20]"  data-parsley-pattern="^[a-zA-Z ]+$" data-parsley-pattern-message="Invalid chracters. Please input Alphabet only">
         @if($errors->has('middle'))
           <span class="help-block">{{ $errors->first('middle') }}</span>
         @endif
@@ -68,7 +68,7 @@
     <div class="item form-group {{ $errors->has('user') ? 'has-error' : '' }}">
     <label class="control-label col-md-3 col-sm-3 col-xs-6">Username<span class="required">*</span></label>
     <div class="col-md-6 col-sm-6 col-xs-12"> 
-        <input type="text" class="form-control col-md-7 col-xs-12" placeholder="Username" name="user">
+        <input type="text" class="form-control col-md-7 col-xs-12" placeholder="Username" name="user" required>
         @if($errors->has('user'))
           <span class="help-block">{{ $errors->first('user') }}</span>
         @endif
@@ -78,7 +78,7 @@
    <div class="item form-group {{ $errors->has('pass') ? 'has-error' : '' }}">
     <label class="control-label col-md-3 col-sm-3 col-xs-6">Password<span class="required">*</span></label>
     <div class="col-md-6 col-sm-6 col-xs-12"> 
-        <input type="password" class="form-control col-md-7 col-xs-12" placeholder="Password" name="pass" id="pass">
+        <input type="password" class="form-control col-md-7 col-xs-12" placeholder="Password" name="pass" id="pass" required  data-parsley-length="[6, 20]">
         @if($errors->has('pass'))
           <span class="help-block">{{ $errors->first('pass') }}</span>
         @endif
@@ -88,7 +88,7 @@
     <div class="item form-group {{ $errors->has('cpass') ? 'has-error' : '' }}">
     <label class="control-label col-md-3 col-sm-3 col-xs-6">Repeat Password<span class="required">*</span></label>
     <div class="col-md-6 col-sm-6 col-xs-12"> 
-        <input type="password" class="form-control col-md-7 col-xs-12" placeholder="Repeat Password" name="cpass">
+        <input type="password" class="form-control col-md-7 col-xs-12" placeholder="Repeat Password" name="cpass" required  data-parsley-length="[6, 20]" data-parsley-equalto="#pass">
         @if($errors->has('cpass'))
           <span class="help-block">{{ $errors->first('cpass') }}</span>
         @endif
@@ -98,7 +98,7 @@
     <div class="item form-group {{ $errors->has('role') ? 'has-error' : '' }}">
             <label class="control-label col-md-3 col-sm-3 col-xs-6">Role<span class="required">*</span></label>
         <div class="col-md-6 col-sm-6 col-xs-12">
-                  <select name="role" class="form-control">
+                  <select name="role" class="form-control" required>
                     <option value="">--Select role--</option>
                     <option value="0">Admin</option>
                     <option value="1">User</option>

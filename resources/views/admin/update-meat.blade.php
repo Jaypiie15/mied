@@ -12,11 +12,11 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        <i class="fa fa-user-plus"></i> Add Users
+        <i class="fa fa-user-plus"></i> Update Meat Cut
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li class="active">Add Users</li>
+        <li class="active">Update Meat Cut</li>
       </ol>
     </section>
 
@@ -28,9 +28,20 @@
         <div class="box-body">
 
 <hr>
+    @if(Session::has('update'))
+        <script type="text/javascript">
+      swal({   
+        title: "SUCCESS",  
+        text: "Updated Successfully",
+        timer: 4000, 
+        type: 'success',  
+        showConfirmButton: false 
+        });
+      setTimeout("location.href = '{{route('view-meat',['hscode'] )}}'",2000);
+    </script>
+  @endif
 
-
-    <form method="POST" action="{{route('update-meat', ['id'=> $id->id]) }}" class="form-horizontal form-label-left" id="form">
+    <form method="POST" action="{{route('update-meat', ['id'=> $id->id]) }}" class="form-horizontal form-label-left" id="form" data-parsley-validate>
 
     <div class="item form-group">
            <label class="control-label col-md-3 col-sm-3 col-xs-12">Commodity <span class="required">*</span></label>
@@ -82,7 +93,7 @@
 
 
         <div class="col-md-6 col-md-offset-3">
-          <button type="submit" class="btn btn-primary btn-block btn-flat" name="btn-register">Register</button>
+          <button type="submit" class="btn btn-primary btn-block btn-flat" name="btn-register">Update</button>
         </div>
         {{csrf_field()}}
         </form>

@@ -6,6 +6,9 @@
   <title>@yield('title')</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <meta http-equiv="cache-control" content="private, max-age=0, no-cache">
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="expires" content="0"> 
   <!-- Bootstrap 3.3.6 -->
   <link rel="stylesheet" href="{{ asset('resources/src/bootstrap/css/bootstrap.min.css') }}">
   <!-- Font Awesome -->
@@ -21,6 +24,7 @@
   <link rel="stylesheet" href="{{ asset('resources/src/build/sweetalert.css') }}">
   <script type="text/javascript" src="{{ asset('resources/src/build/sweetalert-dev.js') }}"></script>
   <script type="text/javascript" src="{{ asset('resources/src/build/sweetalert.min.js') }}"></script>
+  <link rel="stylesheet" href="{{ asset('resources/src/plugins/parsleyjs/src/parsley.css') }}">
 
   <link href="{{ asset('resources/src/plugins/datatables.net-bs/css/dataTables.bootstrap.min.css') }}" rel="stylesheet">
   <link href="{{ asset('resources/src/plugins/datatables.net-buttons-bs/css/buttons.bootstrap.min.css') }}" rel="stylesheet">
@@ -103,6 +107,9 @@
 <script src="{{ asset('resources/src/plugins/pdfmake/build/pdfmake.min.js') }}"></script>
 <script src="{{ asset('resources/src/plugins/pdfmake/build/vfs_fonts.js') }}"></script>
 <script src="{{ asset('resources/src/plugins/select2/select2.full.min.js') }}"></script>
+<script src="{{ asset('resorces/src/plugins/parsleyjs/parsley.js') }}"></script>
+<script src="{{ asset('resources/src/plugins/parsleyjs/dist/parsley.min.js') }}"></script>
+
     <!-- Datatables -->
 <script type="text/javascript">
   $('#form').parsley();

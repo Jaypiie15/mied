@@ -16,6 +16,7 @@ class CreateCutsTable extends Migration
         Schema::create('cuts', function (Blueprint $table) {
             $table->increments('id');
             $table->string('cut_type');
+            $table->string('responsible');
             $table->timestamps();
         });
     }

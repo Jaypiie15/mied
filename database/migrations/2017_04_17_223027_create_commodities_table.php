@@ -16,6 +16,7 @@ class CreateCommoditiesTable extends Migration
         Schema::create('commodities', function (Blueprint $table) {
             $table->increments('id');
             $table->string('kind');
+            $table->string('resposible');
             $table->timestamps();
         });
     }

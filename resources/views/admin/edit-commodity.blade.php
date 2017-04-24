@@ -33,7 +33,7 @@
       <!-- Default box -->
       <div class="box">
         <div class="box-body">
-        <form method="POST" action="{{ route('add-commodity')}}">
+        <form method="POST" action="{{ route('add-commodity')}}" data-parsley-validate>
        
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-plus"></i> Add Commodity</button>
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
@@ -47,7 +47,7 @@
 
           <div class="form-group {{ $errors->has('commodity') ? 'has-error' : '' }}">
             <label for="message-text" class="control-label">Input Commodity</label>
-             <input type="text" class="form-control" name="commodity">
+             <input type="text" class="form-control" name="commodity" required  data-parsley-length="[2, 100]">
           @if($errors->has('commodity'))
           <span class="help-block">{{ $errors->first('commodity') }}</span>
         @endif
@@ -80,7 +80,7 @@
             @foreach($coms as $com)
             <td>{{$com->kind}}</td>
             <td>
-            <a href="{{ route('update-commodity', ['id'=>$com->id]) }}" class="btn btn-primary"><i class="fa fa-pencil"></i> Edit</a>
+            <a href="{{ route('update-commodity', ['id'=> Crypt::encrypt($com->id) ]) }}" class="btn btn-primary"><i class="fa fa-pencil"></i> Edit</a>
             <a href="{{ route('delete-commodity', ['id'=>$com->id]) }}" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</a>
             </td>
           </tr>

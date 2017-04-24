@@ -14,11 +14,11 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        <i class="fa fa-pencil"></i> Modify HS Code
+        <i class="fa fa-pencil"></i> Modify Country
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li class="active">Modify HS Code</li>
+        <li class="active">Modify Country</li>
       </ol>
     </section>
 
@@ -39,21 +39,21 @@
         type: 'success',  
         showConfirmButton: false 
         });
-      setTimeout("location.href = '{{route('edit-hscode')}}'",2000);
+      setTimeout("location.href = '{{route('edit-country')}}'",2000);
     </script>
   @endif
 
-    <form method="POST" action="{{ route('update-code',['id' => $codes->id]) }}" class="form-horizontal form-label-left" id="form" data-parlsey-validate>
+    <form method="POST" action="{{ route('update-country',['id' => $couns->id]) }}" class="form-horizontal form-label-left" id="form" data-parsley-validate>
 
     
-    <div class="item form-group {{ $errors->has('code') ? 'has-error' : '' }}">
+    <div class="item form-group {{ $errors->has('country') ? 'has-error' : '' }}">
     <label class="control-label col-md-3 col-sm-3 col-xs-6">HS Code<span class="required"> *</span></label>
     <div class="col-md-6 col-sm-6 col-xs-12"> 
 
     
-        <input type="text" name="code" value="{{$codes->hscode}}" class="form-control col-md-7 col-xs-12" required  data-parsley-length="[2, 100]">
-         @if($errors->has('code'))
-          <span class="help-block">{{ $errors->first('code') }}</span>
+        <input type="text" name="country" value="{{$couns->country}}" class="form-control col-md-7 col-xs-12" required  data-parsley-length="[2, 100]">
+         @if($errors->has('country'))
+          <span class="help-block">{{ $errors->first('country') }}</span>
         @endif
 
       </div>

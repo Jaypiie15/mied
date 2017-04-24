@@ -18,20 +18,20 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('resources/src/dist/css/AdminLTE.min.css') }}">
   <link href="{{ asset('resources/src/plugins/animate.css/animate.min.css') }}" rel="stylesheet">
-  <!-- iCheck -->
-  <link rel="stylesheet" href="{{ asset('resources/src/plugins/iCheck/square/blue.css') }}">
+  <!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="{{ asset('resources/src/dist/css/skins/_all-skins.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('resources/src/plugins/parsleyjs/src/parsley.css') }}">
   <link rel="stylesheet" href="{{ asset('resources/src/build/sweetalert.css') }}">
   <script type="text/javascript" src="{{ asset('resources/src/build/sweetalert-dev.js') }}"></script>
   <script type="text/javascript" src="{{ asset('resources/src/build/sweetalert.min.js') }}"></script>
+  <link rel="stylesheet" href="{{ asset('resources/src/plugins/parsleyjs/src/parsley.css') }}">
 
   <link href="{{ asset('resources/src/plugins/datatables.net-bs/css/dataTables.bootstrap.min.css') }}" rel="stylesheet">
   <link href="{{ asset('resources/src/plugins/datatables.net-buttons-bs/css/buttons.bootstrap.min.css') }}" rel="stylesheet">
   <link href="{{ asset('resources/src/plugins/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css') }}" rel="stylesheet">
   <link href="{{ asset('resources/src/plugins/datatables.net-responsive-bs/css/responsive.bootstrap.min.css') }}" rel="stylesheet">
   <link href="{{ asset('resources/src/plugins/datatables.net-scroller-bs/css/scroller.bootstrap.min.css') }}" rel="stylesheet">
-
+  <link rel="stylesheet" href="{{ asset('resources/src/plugins/select2/select2.min.css') }}">
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -39,7 +39,7 @@
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 </head>
-<body class="hold-transition login-page">
+<body class="hold-transition skin-blue sidebar-mini">
 @yield('content')
       <div class="row">
 
@@ -66,6 +66,9 @@
   </div>
   <!-- /.content-wrapper -->
 
+  <footer class="main-footer">
+    <strong>National Meat Inspection Services   Meat Cuts Catalogue  <?php echo date('Y')?></strong>
+  </footer>
 
   <!-- Control Sidebar -->
 
@@ -75,14 +78,11 @@
   <div class="control-sidebar-bg"></div>
 </div>
 </body>
+<!-- jQuery 2.2.3 -->
 <script src="{{ asset('resources/src/plugins/jQuery/jquery-2.2.3.min.js') }}"></script>
 <!-- Bootstrap 3.3.6 -->
 <script src="{{ asset('resources/src/bootstrap/js/bootstrap.min.js') }}"></script>
-
-<!-- iCheck -->
-<script src="{{ asset('resources/src/plugins/iCheck/icheck.min.js') }}"></script>
-<script src="{{ asset('resources/src/plugins/parsleyjs/parsley.js') }}"></script>
-<script src="{{ asset('resources/src/plugins/parsleyjs/dist/parsley.min.js') }}"></script>
+<!-- SlimScroll -->
 <script src="{{ asset('resources/src/plugins/slimScroll/jquery.slimscroll.min.js') }}"></script>
 <!-- FastClick -->
 <script src="{{ asset('resources/src/plugins/fastclick/fastclick.js') }}"></script>
@@ -107,10 +107,44 @@
 <script src="{{ asset('resources/src/plugins/pdfmake/build/pdfmake.min.js') }}"></script>
 <script src="{{ asset('resources/src/plugins/pdfmake/build/vfs_fonts.js') }}"></script>
 <script src="{{ asset('resources/src/plugins/select2/select2.full.min.js') }}"></script>
+<script src="{{ asset('plugins/parsleyjs/parsley.js') }}"></script>
+<script src="{{ asset('plugins/parsleyjs/dist/parsley.min.js') }}"></script>
     <!-- Datatables -->
 <script type="text/javascript">
   $('#form').parsley();
 
+</script>
+  <script>
+    var selDiv = "";
+        
+    document.addEventListener("DOMContentLoaded", init, false);
+    
+    function init() {
+        document.querySelector('#files').addEventListener('change', handleFileSelect, false);
+        selDiv = document.querySelector("#selectedFiles");
+    }
+        
+    function handleFileSelect(e) {
+        
+        if(!e.target.files) return;
+        
+        selDiv.innerHTML = "";
+        
+        var files = e.target.files;
+        for(var i=0; i<files.length; i++) {
+            var f = files[i];
+            
+            selDiv.innerHTML += f.name + "<br/>";
+
+        }
+        
+    }
+    </script>
+    <script>
+  $(function () {
+    //Initialize Select2 Elements
+    $(".select2").select2();
+      });
 </script>
     <script>
       $(document).ready(function() {
@@ -193,14 +227,5 @@
         TableManageButtons.init();
       });
     </script>
-<script>
-  $(function () {
-    $('input').iCheck({
-      checkboxClass: 'icheckbox_square-blue',
-      radioClass: 'iradio_square-blue',
-      increaseArea: '20%' // optional
-    });
-  });
-</script>
 
 </html>

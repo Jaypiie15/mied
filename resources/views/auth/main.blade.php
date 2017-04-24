@@ -1,4 +1,4 @@
-@extends('admin.layouts.master')
+@extends('auth.layouts.layout')
 
 @section('title')
 	Meat Cuts Catalogue
@@ -6,8 +6,7 @@
 
 	@section('content')
 
-	@include('admin.include.header')
-
+		@include('auth.include.header')
 	  <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -44,7 +43,7 @@
         </thead>
         <tbody>
         	
-        @foreach($meats as $meat)
+        @foreach($meatss as $meat)
         <tr>
         <td>{{$meat->kind}}</td>
         <td>{{$meat->cut_type}}</td>
@@ -53,7 +52,7 @@
         <td>{{$meat->remarks}}</td>
         <td>{{$meat->country}}</td>
 				<td>
-				<a href="{{ route('view-meat',['hscode' => Crypt::encrypt($meat->hscode) ]) }}" class="btn btn-primary"><i class="fa fa-eye"></i> Click to View Images</a>
+				<a href="{{ route('user-view',['hscode' => Crypt::encrypt($meat->hscode)]) }}" class="btn btn-primary"><i class="fa fa-eye"></i> Click to View Images</a>
         @endforeach
 				</td>
 				</tr>

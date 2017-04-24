@@ -43,7 +43,7 @@
     </script>
   @endif
 
-    <form method="POST" action="{{ route('update-cut_type',['id' => $id->id]) }}" class="form-horizontal form-label-left" id="form">
+    <form method="POST" action="{{ route('update-cut_type',['id' => $cuts->id]) }}" class="form-horizontal form-label-left" id="form" data-parsley-validate>
 
     
     <div class="item form-group {{ $errors->has('cut') ? 'has-error' : '' }}">
@@ -51,7 +51,7 @@
     <div class="col-md-6 col-sm-6 col-xs-12"> 
 
     
-        <input type="text" name="cut" value="{{$id->cut_type}}" class="form-control col-md-7 col-xs-12" >
+        <input type="text" name="cut" value="{{$cuts->cut_type}}" class="form-control col-md-7 col-xs-12" required  data-parsley-length="[2, 100]">
          @if($errors->has('cut'))
           <span class="help-block">{{ $errors->first('cut') }}</span>
         @endif

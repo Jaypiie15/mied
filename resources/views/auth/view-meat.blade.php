@@ -1,11 +1,11 @@
-@extends('admin.layouts.master')
+@extends('auth.layouts.layout')
 
 @section('title')
   Meat Cuts Catalogue
 @endsection
 
   @section('content')
-  @include('admin.include.header')
+  @include('auth.include.header')
 
   <!-- =============================================== -->
 
@@ -28,18 +28,16 @@
       <!-- Default box -->
       <div class="box">
         <div class="box-body">
-    @if(Session::has('delete'))
-    <script>swal("SUCCESS","Meat Cut Deleted!","success")</script>
-  @endif
 
-                    <div class="col-lg-12">
-                    </div>
+
                     <hr>
-                    <a href="{{ route('show-meat')}}" class="btn btn-primary"><i class="fa fa-mail-reply"></i> Back</a>
+                    <a href="{{ route('main')}}" class="btn btn-primary"><i class="fa fa-mail-reply"></i> Back</a>
+                    <a href="{{ route('print-all')}}" target="blank" class="btn btn-warning"><i class="fa fa-print"></i> Print All</a>
                     <div class="row">
                     <div class="list-group-gallery">
                     @if($meat_cuts->count())
                     @foreach($meat_cuts as $meat_cut)
+
                     <div class="col-sm-4 col-xs-6 col-md-3 col-lg-3">
                       <a class="thumbnail fancybox" rel="lightbox" href="/mied/{{ $meat_cut->image }}">
                         <img class="img-responsive" alt="" src="/mied/{{$meat_cut->image}}" style="width:300px;height:150px;">
@@ -63,10 +61,9 @@
                       </div>
                       </a>
                       <div class="text-center">                      
-                      <a href="{{ route('update-meatcut', ['id'=>$meat_cut->id]) }}" class="btn btn-primary btn btn-xs">Update</a>
-                      <a href="{{ route('delete-meatcut', ['id'=>$meat_cut->id]) }}" class="btn btn-danger btn btn-xs glyphicon glyphicon-remove"></a>
+                      <a href="{{ route('print-meat', ['id'=>$meat_cut->id]) }}" target="blank" class="btn btn-primary btn btn-sm"><i class="fa fa-print"></i>Print
+                      </a>
                       </div>
-                      
                       </div>
                     @endforeach
                     @endif
