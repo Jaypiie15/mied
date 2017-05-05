@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
+use Carbon\Carbon;
 use Validator;
 use Response;
 use Redirect;
@@ -25,11 +26,17 @@ class AdminController extends Controller
 {
 
     public function checkUser(){
+
         if(Auth::check()){
+
             if(Auth::user()->role != '0'){
+
             return redirect()->intended('/');
+
             }
+
         }else{
+
             return redirect()->intended('/');
         }
     }
@@ -50,7 +57,7 @@ class AdminController extends Controller
             return $this->checkUser();
         }
 
-        $coms = DB::table('commodities')->select('id','kind')->get();
+        $coms = DB::table('commodities')->select('id','kind','show')->where('show', '1')->get();
 
         return view('admin.edit-commodity', compact('coms'));
     }
@@ -66,9 +73,19 @@ class AdminController extends Controller
             ]);
 
         $commodity = $request['commodity'];
+        $check = Commodity::where('kind', $commodity)->where('show','1')->exists();
+
+        if($check){
+
+        $args = array('error'=>'');
+            return redirect()->back()->with($args);
+
+        }
 
         $com       = new Commodity();
         $com->kind = $commodity;
+        $com->responsible = Auth::user()->firstname;
+        $com->show = '1';
         
 
         $com->save();
@@ -102,8 +119,20 @@ class AdminController extends Controller
             'commodity' => 'required | min:2'
             ]);
 
+        $commodity = $request['commodity'];
+        $check = Commodity::where('kind', $commodity)->where('show','1')->exists();
+
+
+        if($check){
+
+        $args = array('error'=>'');
+            return redirect()->back()->with($args);
+
+        }
+
         $com = Commodity::where('id',$id)->update([
-            'kind' => $request['commodity']
+            'kind' => $commodity,
+            'responsible' => Auth::user()->firstname
             ]);
 
             $args = array('update' => '');
@@ -116,11 +145,25 @@ class AdminController extends Controller
             return $this->checkUser();
         }
 
-        $com_del = Commodity::where('id', $id)->delete();
+        $com_del = Commodity::where('id', $id)->update([
+            'show' => '0',
+            'responsible' => Auth::user()->firstname
+            ]);
 
             $args = array('delete' => '');
             return redirect()->back()->with($args);
 
+    }
+
+    public function com_logs(){
+
+        if($this->checkUser()){
+            return $this->checkUser();
+        }
+
+        $com_logs = DB::table('commodities')->orderBy('updated_at','DESC')->get();
+
+            return view('admin.com-logs', compact('com_logs'));   
     }
 
     public function show_hscode(){
@@ -129,7 +172,7 @@ class AdminController extends Controller
             return $this->checkUser();
         }
 
-        $codes = DB::table('codes')->select('id','hscode')->get();
+        $codes = DB::table('codes')->select('id','hscode','show')->where('show','1')->get();
 
             return view('admin.edit-hscode', compact('codes'));
     }
@@ -145,9 +188,20 @@ class AdminController extends Controller
             ]);
 
             $code = $request['code'];
+            $check = Code::where('hscode',$code)->where('show','1')->exists();
+
+            if($check)
+            {
+
+              $args = array('error' => '');
+              
+                return redirect()->back()->with($args);  
+            }
 
             $hscode = new Code();
             $hscode->hscode = $code;
+            $hscode->responsible = Auth::user()->firstname;
+            $hscode->show = '1';
 
             $hscode->save();
 
@@ -176,8 +230,18 @@ class AdminController extends Controller
             'code' => 'required | min:2'
             ]);
 
+        $cod = $request['code'];
+        $check = Code::where('hscode',$cod)->where('show','1')->exists();
+
+        if($check){
+
+            $args = array('error' => '');
+                return redirect()->back()->with($args);
+
+        }
         $code = Code::where('id',$id)->update([
-            'hscode' => $request['code']
+            'hscode' => $cod,
+            'responsible' => Auth::user()->firstname
             ]);
 
             $args = array('update' => '');
@@ -190,10 +254,21 @@ class AdminController extends Controller
             return $this->checkUser();
         }
 
-        $del_code = Code::where('id',$id)->delete();
+
+        $del_code = Code::where('id',$id)->update([
+            'show' => '0',
+            'responsible' => Auth::user()->firstname
+            ]);
 
             $args = array('delete' => '');
             return redirect()->back()->with($args);
+    }
+
+    public function code_logs(){
+
+        $code_logs = DB::table('codes')->orderBy('updated_at', 'DESC')->get();
+
+            return view('admin.code-logs', compact('code_logs'));
     }
 
     public function show_cut(){
@@ -202,7 +277,7 @@ class AdminController extends Controller
             return $this->checkUser();
         }
 
-        $cuts = DB::table('cuts')->select('id','cut_type')->get();
+        $cuts = DB::table('cuts')->select('id','cut_type','show')->where('show','1')->get();
 
             return view('admin.edit-cut', compact('cuts'));
     }
@@ -218,9 +293,19 @@ class AdminController extends Controller
             ]);
 
             $cut = $request['cut'];
+            $check = Cut::where('cut_type',$cut)->where('show','1')->exists();
+
+            if($check){
+
+                $args = array('error' => '');
+                    return redirect()->back()->with($args); 
+
+            }
 
             $cut_type = new Cut();
             $cut_type->cut_type = $cut;
+            $cut_type->responsible = Auth::user()->firstname;
+            $cut_type->show = '1';
 
             $cut_type->save();
 
@@ -249,8 +334,19 @@ class AdminController extends Controller
             'cut' => 'required | min:2'
             ]);
 
+        $cu = $request['cut'];
+        $check = Cut::where('cut_type',$cu)->where('show','1')->exists();
+
+
+        if($check){
+
+            $args = array('error' => '');
+
+                return redirect()->back()->with($args);            
+        }
         $cut = Cut::where('id',$id)->update([
-            'cut_type' => $request['cut']
+            'cut_type' => $cu,
+            'responsible' => Auth::user()->firstname
             ]);
 
             $args = array('update' => '');
@@ -263,10 +359,21 @@ class AdminController extends Controller
             return $this->checkUser();
         }
 
-        $del_cut = Cut::where('id',$id)->delete();
+
+        $del_cut = Cut::where('id',$id)->update([
+            'show' => '0',
+            'responsible' => Auth::user()->firstname
+            ]);
 
             $args = array('delete' => '');
             return redirect()->back()->with($args);
+    }
+
+    public function cut_logs(){
+
+        $cut_logs = DB::table('cuts')->orderBy('updated_at', 'DESC')->get();
+
+            return view('admin.cut-logs', compact('cut_logs'));
     }
 
     public function show_country(){
@@ -275,7 +382,7 @@ class AdminController extends Controller
             return $this->checkUser();
         }
 
-        $countrys = DB::table('countries')->select('id','country')->get();
+        $countrys = DB::table('countries')->select('id','country','show')->where('show','1')->get();
 
             return view('admin.edit-country', compact('countrys'));
     }
@@ -291,9 +398,19 @@ class AdminController extends Controller
             ]);
 
             $coun = $request['country'];
+            $check = Country::where('country',$coun)->where('show','1')->exists();
+
+            if($check){
+
+            $args = array('error' => '');
+                return redirect()->back()->with($args); 
+
+            }
 
             $country = new Country();
             $country->country = $coun;
+            $country->responsible = Auth::user()->firstname;
+            $country->show = '1';
 
             $country->save();
 
@@ -322,8 +439,18 @@ class AdminController extends Controller
             'country' => 'required | min:2'
             ]);
 
+        $coun = $request['country'];
+        $check = Country::where('country',$coun)->where('show','1')->exists();
+
+        if($check){
+
+        $args = array('error' => '');
+            return redirect()->back()->with($args);
+
+        }
         $country = Country::where('id',$id)->update([
-            'country' => $request['country']
+            'country' => $request['country'],
+            'responsible' => Auth::user()->firstname
             ]);
 
             $args = array('update' => '');
@@ -336,10 +463,20 @@ class AdminController extends Controller
             return $this->checkUser();
         }
 
-        $del_country = Country::where('id',$id)->delete();
+        $del_country = Country::where('id',$id)->update([
+            'show' => '0',
+            'responsible' => Auth::user()->firstname
+            ]);
 
             $args = array('delete' => '');
             return redirect()->back()->with($args);
+    }
+
+    public function coun_logs(){
+
+        $coun_logs = DB::table('countries')->orderBy('updated_at', 'DESC')->get();
+
+            return view('admin.coun-logs', compact('coun_logs'));
     }
 
     public function show_dots(){
@@ -348,7 +485,7 @@ class AdminController extends Controller
             return $this->checkUser();
         }
 
-        $dots = DB::table('dots')->select('id','question','answer')->get();
+        $dots = DB::table('dots')->select('id','question','answer','show')->where('show','1')->get();
 
             return view('admin.edit-dots', compact('dots'));
     }
@@ -366,12 +503,21 @@ class AdminController extends Controller
 
             $que = $request['question'];
             $ans = $request['answer'];
+            $check = Dot::where('question',$que)->where('answer',$ans)->where('show','1')->exists();
 
-            $country = new Dot();
-            $country->question = $que;
-            $country->answer   = $ans;
+            if($check){
 
-            $country->save();
+            $args = array('error' => '');
+                return redirect()->back()->with($args);
+
+            }
+            $dots = new Dot();
+            $dots->question = $que;
+            $dots->answer   = $ans;
+            $dots->responsible = Auth::user()->firstname;
+            $dots->show = '1';
+
+            $dots->save();
 
             $args = array('add' => '');
             return redirect()->back()->with($args);
@@ -399,9 +545,21 @@ class AdminController extends Controller
             'answer' => 'required | min:2'
             ]);
 
-        $country = Dot::where('id',$id)->update([
-            'question' => $request['question'],
-            'answer' => $request['answer']
+        $que = $request['question'];
+        $ans = $request['answer'];
+        $check = Dot::where('question',$que)->where('answer',$ans)->where('show','1')->exists();
+
+
+        if($check){
+
+            $args = array('error' => '');
+                return redirect()->back()->with($args);
+
+        }
+        $dot = Dot::where('id',$id)->update([
+            'question' => $que,
+            'answer' => $ans,
+            'responsible' => Auth::user()->firstname
             ]);
 
             $args = array('update' => '');
@@ -414,10 +572,21 @@ class AdminController extends Controller
             return $this->checkUser();
         }
 
-        $del_country = Dot::where('id',$id)->delete();
+
+        $del_country = Dot::where('id',$id)->update([
+            'show' => '0',
+            'responsible' => Auth::user()->firstname
+            ]);
 
             $args = array('delete' => '');
             return redirect()->back()->with($args);
+    }
+
+    public function dots_logs(){
+
+        $dots_logs = DB::table('dots')->orderBy('updated_at', 'DESC')->get();
+
+            return view('admin.dots-logs', compact('dots_logs'));
     }
 
     public function show_options(){
@@ -440,7 +609,7 @@ class AdminController extends Controller
             return $this->checkUser();
         }
 
-        $meats = DB::table('meat_cuts')->select('kind','cut_type','hscode','name_number','remarks','country')->groupBy('hscode')->get();
+        $meats = DB::table('meat_cuts')->select('kind','cut_type','hscode','name_number','remarks','country')->where('show','1')->groupBy('hscode')->get();
 
         return view('admin.show-meat' , compact('meats'));
     }
@@ -451,7 +620,7 @@ class AdminController extends Controller
             return $this->checkUser();
         }
         $code = Crypt::decrypt($code);
-        $meat_cuts = Meats::where('hscode', $code)->get();
+        $meat_cuts = Meats::where('hscode', $code)->where('show','1')->get();
 
         return view('admin.view-meat', compact('meat_cuts'))->with('hscode',$code);
     }
@@ -467,7 +636,7 @@ class AdminController extends Controller
     		'first'   => 'required | min:2 | max:20 | regex:/^[a-zA-Z ]+$/',
     		'middle'  => 'required | min:2 | max:20 | regex:/^[a-zA-Z ]+$/',
     		'user'    => 'required | min:2',
-    		'pass'    => 'required | min:6 | max:8',
+    		'pass'    => 'required | min:6 | max:20',
     		'cpass'   => 'required | same:pass',
     		'role'    => 'required'
     		]);
@@ -481,6 +650,15 @@ class AdminController extends Controller
             $status  = 'activated';
             $res     = Auth::user()->firstname;
 
+            $check = User::where('username',$user)->exists();
+
+            if($check){
+
+            $args = array('error' =>'');
+               return redirect()->back()->with($args);
+
+            }
+
     	       $member             = new User();
     	       $member->lastname   = $last;
     	       $member->firstname  = $first;
@@ -490,6 +668,7 @@ class AdminController extends Controller
     	       $member->role       = $role;
                $member->status     = $status;
                $member->responsible = $res;
+               $member->show = '1';
 
     	       $member->save();
 
@@ -523,13 +702,11 @@ class AdminController extends Controller
     		$validator = Validator::make(array('file'=> $file), $rules);
 
     		if($validator->passes()){
-    			$destinationPath = 'resources/views/images/';
+    			$destinationPath = 'images/';
     			$filename        = $file->getClientOriginalName();
     			$upload_success  = $file->move($destinationPath, $filename);
                 
     			$upload_count ++;
-
-
 
     		      $meat = new Meats();
     		      $meat->kind        = $request['commodity'];
@@ -539,11 +716,10 @@ class AdminController extends Controller
     		      $meat->remarks     = $request['remarks'];
     		      $meat->country     = $request['country'];
     		      $meat->image       = $destinationPath.''.$filename;
+                  $meat->responsible = Auth::user()->firstname;
+                  $meat->show = '1';
 
     		      $meat->save();
-
-                
-                
 
     		}
     	}
@@ -558,7 +734,11 @@ class AdminController extends Controller
             return $this->checkUser();
         }
 
-        $del = Meats::where('id', $id)->delete();
+
+        $del = Meats::where('id', $id)->update([
+            'show' => '0',
+            'responsible' => Auth::user()->firstname
+            ]);
 
         $args = array('delete' => '');
         return redirect()->back()->with($args);
@@ -569,12 +749,12 @@ class AdminController extends Controller
         if($this->checkUser()){
             return $this->checkUser();
         }
-
-        $id = Meats::where('id', $id)->first();
-        if(!$id){
+        $id = Crypt::decrypt($id);
+        $meatss = Meats::where('id', $id)->first();
+        if(!$meatss){
             return 'Sorry';
         }
-        return view('admin.update-meat', compact('id'));
+        return view('admin.update-meat', compact('meatss'));
     }
 
     public function update_meat(Request $request, $id){
@@ -599,7 +779,8 @@ class AdminController extends Controller
             'hscode'      => $request['code'],
             'name_number' => $request['name'],
             'remarks'     => $request['rema'],
-            'country'     => $request['coun']
+            'country'     => $request['coun'],
+            'responsible' => Auth::user()->firstname
             ]);
 
             $args = array('update' => '');
@@ -607,21 +788,28 @@ class AdminController extends Controller
 
     }
 
+    public function meat_logs(){
+
+        $meat_logs = DB::table('meat_cuts')->orderBy('updated_at','DESC')->get();
+
+            return view('admin.meat-logs', compact('meat_logs'));
+    }
+
     public function count(){
 
          if($this->checkUser()){
             return $this->checkUser();
         }
-        $count_kinds = DB::table('commodities')->select('kind')->count();
-        $count_types = DB::table('cuts')->select('cut_type')->count();
-        $count_code  = DB::table('codes')->select('hscode')->count();
-        $count_coun  = DB::table('countries')->select('country')->count();
-        $count_meats = DB::table('meat_cuts')->count();
-        $count_dots  = DB::table('dots')->select('question','answer')->count();
-        $count_admins = DB::table('users')->select('role')->where('role', '0')->count();
-        $count_users = DB::table('users')->select('role')->where('role', '1')->count();
-        $count_active = DB::table('users')->select('status')->where('status', 'activated')->count();
-        $count_inactive = DB::table('users')->select('status')->where('status', '0')->count();
+        $count_kinds = DB::table('commodities')->select('kind','show')->where('show','1')->count();
+        $count_types = DB::table('cuts')->select('cut_type','show')->where('show','1')->count();
+        $count_code  = DB::table('codes')->select('hscode','show')->where('show','1')->count();
+        $count_coun  = DB::table('countries')->select('country','show')->where('show','1')->count();
+        $count_meats = DB::table('meat_cuts','show')->where('show','1')->count();
+        $count_dots  = DB::table('dots')->select('question','answer')->where('show','1')->count();
+        $count_admins = DB::table('users')->select('role')->where('role', '0')->where('show','1')->count();
+        $count_users = DB::table('users')->select('role')->where('role', '1')->where('show','1')->count();
+        $count_active = DB::table('users')->select('status')->where('status', 'activated')->where('show','1')->count();
+        $count_inactive = DB::table('users')->select('status')->where('status', '0')->where('show','1')->count();
 
 
             return view('admin.dashboard', compact('count_kinds','count_types','count_code','count_coun','count_meats','count_dots','count_admins','count_users','count_active','count_inactive'));        
@@ -629,9 +817,16 @@ class AdminController extends Controller
 
     public function show_users(){
 
-        $users = DB::table('users')->select('id','lastname','firstname','middlename','username','role','status')->get();
+        $users = DB::table('users')->select('id','lastname','firstname','middlename','username','role','status','show')->where('show','1')->get();
 
             return view('admin.users', compact('users'));
+    }
+
+    public function user_logs(){
+
+        $user_logs = DB::table('users')->orderBy('updated_at', 'DESC')->get();
+
+            return view('admin.user-logs', compact('user_logs'));
     }
 
     public function edit_users($id){
@@ -639,12 +834,12 @@ class AdminController extends Controller
         if($this->checkUser()){
             return $this->checkUser();
         }
-
-        $id = User::where('id', $id)->first();
-        if(!$id){
+        $id = Crypt::decrypt($id);
+        $user = User::where('id', $id)->first();
+        if(!$user){
             return 'Sorry';
         }
-            return view('admin.edit-users', compact('id'));
+            return view('admin.edit-users', compact('user'));
     }
     public function update_users(Request $request, $id){
 
@@ -656,16 +851,22 @@ class AdminController extends Controller
             'lastname' => 'required | min:2',
             'firstname' => 'required | min:2',
             'middlename' => 'required | min:2',
-            'username' => 'required | min:2',
             'status' => 'required'
             ]);
+        $last = $request['lastname'];
+        $first = $request['firstname'];
+        $middle = $request['middlename'];
+        $status = $request['status'];
+        date_default_timezone_set('Asia/Manila');
+        $date = date('F j, \ Y h:i A');
 
         $country = User::where('id',$id)->update([
-            'lastname' => $request['lastname'],
-            'firstname' => $request['firstname'],
-            'middlename' => $request['middlename'],
-            'username' => $request['username'],
-            'status' => $request['status']
+            'lastname' => $last,
+            'firstname' => $first,
+            'middlename' => $middle,
+            'status' => $status,
+            'responsible' => Auth::user()->firstname,
+            'updated' => $date
             ]);
 
             $args = array('update' => '');

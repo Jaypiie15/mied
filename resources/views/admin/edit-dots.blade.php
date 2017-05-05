@@ -30,6 +30,9 @@
     @if(Session::has('delete'))
     <script>swal("SUCCESS","Definition of Terms Deleted!","success")</script>
   @endif
+    @if(Session::has('error'))
+    <script>swal("ERROR","Question and Answer Already Exists!","error")</script>
+  @endif
       <!-- Default box -->
       <div class="box">
         <div class="box-body">

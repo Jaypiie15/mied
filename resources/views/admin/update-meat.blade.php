@@ -37,16 +37,25 @@
         type: 'success',  
         showConfirmButton: false 
         });
-      setTimeout("location.href = '{{route('view-meat',['hscode'] )}}'",2000);
+      setTimeout("location.href = '{{route('show-meat')}}'",2000);
     </script>
   @endif
 
-    <form method="POST" action="{{route('update-meat', ['id'=> $id->id]) }}" class="form-horizontal form-label-left" id="form" data-parsley-validate>
+    <form method="POST" action="{{route('update-meat', ['id'=> $meatss->id]) }}" class="form-horizontal form-label-left" id="form" data-parsley-validate>
+
+    <div class="item form-group">
+      <label class="control-label col-md-3 col-sm-3 col-xs-12"><span class="required"></span></label>
+    <div class="col-md-6 col-sm-6 col-xs-12"> 
+        
+        <img class="img-responsive" alt="" src="/mied/{{$meatss->image}}" style="width:300px;height:150px;">
+        
+    </div>
+    </div>      
 
     <div class="item form-group">
            <label class="control-label col-md-3 col-sm-3 col-xs-12">Commodity <span class="required">*</span></label>
     <div class="col-md-6 col-sm-6 col-xs-12"> 
-        <input type="text" class="form-control col-md-7 col-xs-12 "  name="kind" value="{{$id->kind}}">
+        <input type="text" class="form-control col-md-7 col-xs-12 "  name="kind" value="{{$meatss->kind}}">
         
     </div>
     </div>
@@ -54,7 +63,7 @@
     <div class="item form-group">
     <label class="control-label col-md-3 col-sm-3 col-xs-6">Meat Cut Type<span class="required">*</span></label>
     <div class="col-md-6 col-sm-6 col-xs-12"> 
-        <input type="text" class="form-control col-md-7 col-xs-12" name="cut" value="{{$id->cut_type}}">
+        <input type="text" class="form-control col-md-7 col-xs-12" name="cut" value="{{$meatss->cut_type}}">
 
       </div>
       </div>
@@ -62,7 +71,7 @@
     <div class="item form-group">
     <label class="control-label col-md-3 col-sm-3 col-xs-6">HS Code<span class="required">*</span></label>
     <div class="col-md-6 col-sm-6 col-xs-12"> 
-        <input type="text" class="form-control col-md-7 col-xs-12" name="code" value="{{$id->hscode}}">
+        <input type="text" class="form-control col-md-7 col-xs-12" name="code" value="{{$meatss->hscode}}">
 
       </div>
       </div>
@@ -70,7 +79,7 @@
     <div class="item form-group">
     <label class="control-label col-md-3 col-sm-3 col-xs-6">FME Name Number<span class="required">*</span></label>
     <div class="col-md-6 col-sm-6 col-xs-12"> 
-        <input type="text" class="form-control col-md-7 col-xs-12" name="name" value="{{$id->name_number}}">
+        <input type="text" class="form-control col-md-7 col-xs-12" name="name" value="{{$meatss->name_number}}">
 
       </div>
       </div>
@@ -78,7 +87,7 @@
    <div class="item form-group">
     <label class="control-label col-md-3 col-sm-3 col-xs-6">Remarks<span class="required">*</span></label>
     <div class="col-md-6 col-sm-6 col-xs-12"> 
-        <input type="text" class="form-control col-md-7 col-xs-12" name="rema" id="pass" value="{{$id->remarks}}">
+        <input type="text" class="form-control col-md-7 col-xs-12" name="rema" id="pass" value="{{$meatss->remarks}}">
 
       </div>
       </div>
@@ -86,7 +95,7 @@
     <div class="item form-group">
     <label class="control-label col-md-3 col-sm-3 col-xs-6">Country<span class="required">*</span></label>
     <div class="col-md-6 col-sm-6 col-xs-12"> 
-        <input type="text" class="form-control col-md-7 col-xs-12" name="coun" value="{{$id->country}}">
+        <input type="text" class="form-control col-md-7 col-xs-12" name="coun" value="{{$meatss->country}}">
 
       </div>
       </div>

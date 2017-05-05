@@ -22,8 +22,8 @@ class CreateMeatCuts extends Migration
             $table->string('remarks');
             $table->string('country');
             $table->string('image');
-            $table->string('show');
             $table->string('responsible');
+            $table->string('show');
             $table->timestamps();
         });
     }

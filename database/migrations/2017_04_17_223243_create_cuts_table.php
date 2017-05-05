@@ -17,6 +17,7 @@ class CreateCutsTable extends Migration
             $table->increments('id');
             $table->string('cut_type');
             $table->string('responsible');
+            $table->string('show');
             $table->timestamps();
         });
     }

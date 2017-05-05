@@ -29,7 +29,7 @@
       <!-- Default box -->
       <div class="box">
         <div class="box-body">
-
+        <a href="{{ route('show-users')}}" class="btn btn-primary"><i class="fa fa-mail-reply"></i> Back</a>
 <hr>
       @if(Session::has('update'))
         <script type="text/javascript">
@@ -43,7 +43,10 @@
       setTimeout("location.href = '{{route('show-users')}}'",2000);
     </script>
   @endif
-    <form method="POST" action="{{ route('update-user', ['id' => $id->id]) }}" class="form-horizontal form-label-left" id="form" data-parsley-validate>
+    @if(Session::has('error'))
+    <script>swal("ERROR","Username Already Taken!","error")</script>
+  @endif
+    <form method="POST" action="{{ route('update-user', ['id' => $user->id]) }}" class="form-horizontal form-label-left" id="form" data-parsley-validate>
     
     
     <div class="item form-group {{ $errors->has('lastname') ? 'has-error' : '' }}">
@@ -51,7 +54,7 @@
     <div class="col-md-6 col-sm-6 col-xs-12"> 
 
     
-        <input type="text" name="lastname" value="{{$id->lastname}}" class="form-control col-md-7 col-xs-12" required  data-parsley-length="[2, 100]">
+        <input type="text" name="lastname" value="{{$user->lastname}}" class="form-control col-md-7 col-xs-12" required  data-parsley-length="[2, 100]">
         @if($errors->has('lastname'))
           <span class="help-block">{{ $errors->first('lastname') }}</span>
         @endif
@@ -63,7 +66,7 @@
     <div class="col-md-6 col-sm-6 col-xs-12"> 
 
     
-        <input type="text" name="firstname" value="{{$id->firstname}}" class="form-control col-md-7 col-xs-12" required  data-parsley-length="[2, 100]">
+        <input type="text" name="firstname" value="{{$user->firstname}}" class="form-control col-md-7 col-xs-12" required  data-parsley-length="[2, 100]">
         @if($errors->has('firstname'))
           <span class="help-block">{{ $errors->first('firstname') }}</span>
         @endif
@@ -75,33 +78,21 @@
     <div class="col-md-6 col-sm-6 col-xs-12"> 
 
     
-        <input type="text" name="middlename" value="{{$id->middlename}}" class="form-control col-md-7 col-xs-12" required  data-parsley-length="[2, 100]">
+        <input type="text" name="middlename" value="{{$user->middlename}}" class="form-control col-md-7 col-xs-12" required  data-parsley-length="[2, 100]">
         @if($errors->has('middlename'))
           <span class="help-block">{{ $errors->first('middlename') }}</span>
         @endif
       </div>
       </div>
 
-    <div class="item form-group {{ $errors->has('username') ? 'has-error' : '' }}">
-    <label class="control-label col-md-3 col-sm-3 col-xs-6">Username<span class="required"> *</span></label>
-    <div class="col-md-6 col-sm-6 col-xs-12"> 
-
-    
-        <input type="text" name="username" value="{{$id->username}}" class="form-control col-md-7 col-xs-12" required  data-parsley-length="[2, 100]">
-        @if($errors->has('username'))
-          <span class="help-block">{{ $errors->first('username') }}</span>
-        @endif
-      </div>
-      </div>
 
     <div class="item form-group {{ $errors->has('status') ? 'has-error' : '' }}">
            <label class="control-label col-md-3 col-sm-3 col-xs-12">Status<span class="required"> *</span></label>
         <div class="col-md-6 col-sm-6 col-xs-12">
 
                   <select name="status" class="form-control select2" required>
-
-                            <option value="activated">Activate</option>
-                            <option value="0">Deactivate</option>
+                            <option value="{{$user->status == 'activated' ? 'activated' : '0'}}">{{$user->status == 'activated' ? 'Activated' : 'Deactivated'}}</option>
+                            <option value="{{$user->status == 'activated' ? '0' : 'activated'}}">{{$user->status == 'activated' ? 'Deactivate Account' : 'Activate Account'}}</option>
 
                   </select>
         @if($errors->has('status'))

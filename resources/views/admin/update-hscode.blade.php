@@ -28,7 +28,7 @@
       <!-- Default box -->
       <div class="box">
         <div class="box-body">
-
+        <a href="{{ route('edit-hscode')}}" class="btn btn-primary"><i class="fa fa-mail-reply"></i> Back</a>
 <hr>
     @if(Session::has('update'))
         <script type="text/javascript">
@@ -41,6 +41,9 @@
         });
       setTimeout("location.href = '{{route('edit-hscode')}}'",2000);
     </script>
+  @endif
+        @if(Session::has('error'))
+    <script>swal("ERROR","HS Code Already Exists!","error")</script>
   @endif
 
     <form method="POST" action="{{ route('update-code',['id' => $codes->id]) }}" class="form-horizontal form-label-left" id="form" data-parlsey-validate>

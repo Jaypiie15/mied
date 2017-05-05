@@ -75,10 +75,10 @@
     </div>
 
 
-    <div class="item form-group {{ $errors->has('code') ? 'has-error' : '' }}" required>
+    <div class="item form-group {{ $errors->has('code') ? 'has-error' : '' }}">
            <label class="control-label col-md-3 col-sm-3 col-xs-12">HS Code <span class="required"> *</span></label>
         <div class="col-md-6 col-sm-6 col-xs-12">
-                  <select name="code" class="form-control select2">
+                  <select name="code" class="form-control select2" required>
                     <option selected="selected" value="">-- HS Code --</option>
           @if($codes)
         @foreach($codes as $code)

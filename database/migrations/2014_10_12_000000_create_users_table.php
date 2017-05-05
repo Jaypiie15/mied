@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('role');
             $table->string('status');
             $table->string('responsible');
+            $table->string('show');
             $table->rememberToken();
             $table->timestamps();
         });

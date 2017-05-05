@@ -30,6 +30,9 @@
     @if(Session::has('delete'))
     <script>swal("SUCCESS","HS Code Deleted!","success")</script>
   @endif
+      @if(Session::has('error'))
+    <script>swal("ERROR","HS Code Already Exists!","error")</script>
+  @endif
       <!-- Default box -->
       <div class="box">
         <div class="box-body">
@@ -72,7 +75,7 @@
       <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
         <thead>
           <tr>
-            <th>Meat Cut Type</th>
+            <th>HS Code</th>
             <th>Action</th>
         </thead>
         <tbody>

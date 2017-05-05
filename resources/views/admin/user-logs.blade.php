@@ -14,22 +14,17 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        <i class="fa fa-pencil"></i> Edit Users
+        <i class="fa fa-eye"></i> View Users Logs
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li class="active">Edit Users</li>
+        <li class="active">View Users Logs</li>
       </ol>
     </section>
 
     <!-- Main content -->
     <section class="content">
-  @if(Session::has('add'))
-    <script>swal("SUCCESS","Commodity Added!","success")</script>
-  @endif
-  @if(Session::has('delete'))
-    <script>swal("SUCCESS","Commodity Deleted!","success")</script>
-  @endif
+
 
 
         <div class="box">
@@ -48,21 +43,24 @@
             <th>Username</th>
             <th>Role</th>
             <th>Status</th>
-            <th>Action</th>
+            <th>Created</th>
+            <th>Updated</th>
+            <th>Responsible Admin</th>
         </thead>
         <tbody>
           <tr>
             
-            @foreach($users as $user)
-            <td>{{$user->lastname}}</td>
-            <td>{{$user->firstname}}</td>
-            <td>{{$user->middlename}}</td>
-            <td>{{$user->username}}</td>
-            <td><label style="padding:10px;font-weight:bolder" class="{{$user->role == 0 ? 'label label-danger fa fa-user' : 'label label-warning fa fa-users'}}">  </label>
-            <td><label style="padding:10px;font-weight:bolder" class="{{$user->status == 'activated' ? 'label label-success fa fa-check' : 'label label-danger fa fa-close'}}"> </label>
-            <td>
-            <a href="{{ route('edit-users', ['id' => Crypt::encrypt($user->id)]) }}" class="btn btn-primary"><i class="fa fa-pencil"></i> Edit</a>
-            </td>
+            @foreach($user_logs as $user_log)
+            <td>{{$user_log->lastname}}</td>
+            <td>{{$user_log->firstname}}</td>
+            <td>{{$user_log->middlename}}</td>
+            <td>{{$user_log->username}}</td>
+            <td><label style="padding:10px;font-weight:bolder" class="{{$user_log->role == 0 ? 'label label-danger fa fa-user' : 'label label-warning fa fa-users'}}">  </label>
+            <td><label style="padding:10px;font-weight:bolder" class="{{$user_log->status == 'activated' ? 'label label-success fa fa-check' : 'label label-danger fa fa-close'}}"> </label></td>
+            <td>{{ Carbon\Carbon::parse($user_log->updated_at)->diffForHumans() }}</td>
+            <td>{{ Carbon\Carbon::parse($user_log->updated_at)->diffForHumans() }}</td>
+            <td>Admin {{$user_log->responsible}}</td>
+
           </tr>
           @endforeach
           

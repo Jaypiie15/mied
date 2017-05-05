@@ -34,8 +34,8 @@
 
                     <div class="col-lg-12">
                     </div>
-                    <hr>
                     <a href="{{ route('show-meat')}}" class="btn btn-primary"><i class="fa fa-mail-reply"></i> Back</a>
+                    <hr>
                     <div class="row">
                     <div class="list-group-gallery">
                     @if($meat_cuts->count())
@@ -63,8 +63,8 @@
                       </div>
                       </a>
                       <div class="text-center">                      
-                      <a href="{{ route('update-meatcut', ['id'=>$meat_cut->id]) }}" class="btn btn-primary btn btn-xs">Update</a>
-                      <a href="{{ route('delete-meatcut', ['id'=>$meat_cut->id]) }}" class="btn btn-danger btn btn-xs glyphicon glyphicon-remove"></a>
+                      <a href="{{ route('update-meatcut', ['id'=> Crypt::encrypt($meat_cut->id) ]) }}" class="btn btn-primary btn btn-xs fa fa-pencil"></a>
+                      <a href="{{ route('delete-meatcut', ['id'=>$meat_cut->id]) }}" class="btn btn-danger btn btn-xs fa fa-trash"></a>
                       </div>
                       
                       </div>

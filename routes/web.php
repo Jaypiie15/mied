@@ -37,7 +37,7 @@ Route::get('/auth/print/{id}',[
 	'as' => 'print-meat',
 	'uses' => 'UserController@print_meat'
 ]);
-Route::get('/auth/print-all',[
+Route::get('/auth/print-all/{code}',[
 	'as' => 'print-all',
 	'uses' => 'UserController@print_all'
 ]);
@@ -86,6 +86,34 @@ Route::get('/admin/edit-dots',[
 Route::get('/admin/users',[
 	'as' => 'show-users',
 	'uses' => 'AdminController@show_users'
+]);
+Route::get('/admin/com-logs',[
+	'as' => 'com-logs',
+	'uses' => 'AdminController@com_logs'
+]);
+Route::get('/admin/user-logs',[
+	'as' => 'user-logs',
+	'uses' => 'AdminController@user_logs'
+]);
+Route::get('/admin/code-logs',[
+	'as' => 'code-logs',
+	'uses' => 'AdminController@code_logs'
+]);
+Route::get('/admin/cut-logs',[
+	'as' => 'cut-logs',
+	'uses' => 'AdminController@cut_logs'
+]);
+Route::get('/admin/coun-logs',[
+	'as' => 'coun-logs',
+	'uses' => 'AdminController@coun_logs'
+]);
+Route::get('/admin/meat-logs',[
+	'as' => 'meat-logs',
+	'uses' => 'AdminController@meat_logs'
+]);
+Route::get('/admin/dots-logs',[
+	'as' => 'dots-logs',
+	'uses' => 'AdminController@dots_logs'
 ]);
 
 

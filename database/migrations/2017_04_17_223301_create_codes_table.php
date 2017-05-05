@@ -17,6 +17,7 @@ class CreateCodesTable extends Migration
             $table->increments('id');
             $table->string('hscode');
             $table->string('responsible');
+            $table->string('show');
             $table->timestamps();
         });
     }

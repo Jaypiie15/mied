@@ -38,9 +38,9 @@
           <!-- small box -->
           <div class="small-box bg-aqua">
             <div class="inner">
-            @if($count_kinds)
-              <h3>{{$count_kinds}}</h3>
-              @endif
+            
+              <h3>{{$count_kinds == 0 ? 'No data Found.' : $count_kinds}}</h3>
+             
               <p>No. of Commodities</p>
             </div>
             <div class="icon">
@@ -54,9 +54,9 @@
           <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
-            @if($count_types)
-              <h3>{{$count_types}}</h3>
-              @endif
+            
+              <h3>{{$count_types == 0 ? 'No data Found.' : $count_types}}</h3>
+              
               <p>No. of Cut Types</p>
             </div>
             <div class="icon">
@@ -70,9 +70,9 @@
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
-            @if($count_code)
-              <h3>{{$count_code}}</h3>
-              @endif
+            
+              <h3>{{$count_code == 0 ? 'No data Found.' : $count_code}}</h3>
+              
               <p>No. of HS Code</p>
             </div>
             <div class="icon">
@@ -86,9 +86,9 @@
           <!-- small box -->
           <div class="small-box bg-red">
             <div class="inner">
-            @if($count_coun)
-              <h3>{{$count_coun}}</h3>
-              @endif
+
+            <h3>{{$count_coun == 0 ? 'No data Found.' : $count_coun}}</h3>
+
               <p>No. of Countries</p>
             </div>
             <div class="icon">
@@ -106,9 +106,9 @@
           <!-- small box -->
           <div class="small-box bg-aqua">
             <div class="inner">
-            @if($count_meats)
-              <h3>{{$count_meats}}</h3>
-              @endif
+            
+              <h3>{{$count_meats == 0 ? 'No data Found.' : $count_meats}}</h3>
+             
               <p>No. of Meat Cuts</p>
             </div>
             <div class="icon">
@@ -122,9 +122,7 @@
           <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
-            @if($count_dots)
-              <h3>{{$count_dots}}</h3>
-              @endif
+              <h3>{{$count_dots == 0 ? 'No data Found.' : $count_dots}}</h3>
               <p>No. of Definition of Terms</p>
             </div>
             <div class="icon">
@@ -150,28 +148,10 @@
       <div class="row">
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
-          <div class="small-box bg-aqua">
+          <div class="small-box bg-red">
             <div class="inner">
-            @if($count_admins)
-              <h3>{{$count_admins}}</h3>
-              @endif
+              <h3>{{$count_admins == 0 ? 'No data Found.' : $count_admins}}</h3>
               <p>No. of Administrators</p>
-            </div>
-            <div class="icon">
-              <i class="fa fa-user"></i>
-            </div>
-            <a href="{{ route('show-users') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-green">
-            <div class="inner">
-            @if($count_users)
-              <h3>{{$count_users}}</h3>
-              @endif
-              <p>No. of Users</p>
             </div>
             <div class="icon">
               <i class="fa fa-user"></i>
@@ -184,9 +164,21 @@
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
-            @if($count_active)
-              <h3>{{$count_active}}</h3>
-              @endif
+              <h3>{{$count_users == 0 ? 'No data Found.' : $count_users}}</h3>
+              <p>No. of Users</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-user"></i>
+            </div>
+            <a href="{{ route('show-users') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-green">
+            <div class="inner">
+              <h3>{{$count_active == 0 ? 'No data Found.' : $count_active}}</h3>
               <p>No. of Active Accounts</p>
             </div>
             <div class="icon">
@@ -200,9 +192,7 @@
           <!-- small box -->
           <div class="small-box bg-red">
             <div class="inner">
-            @if($count_inactive)
-              <h3>{{$count_inactive}}</h3>
-              @endif
+              <h3>{{$count_inactive == 0 ? 'No data Found.' : $count_inactive}}</h3>
               <p>No. of Inactive Accounts</p>
             </div>
             <div class="icon">

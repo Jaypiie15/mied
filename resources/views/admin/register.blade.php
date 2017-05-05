@@ -31,6 +31,9 @@
   @if(Session::has('info'))
     <script>swal("SUCCESS","Successfully Added","success")</script>
   @endif
+    @if(Session::has('error'))
+    <script>swal("ERROR","Username Already Taken!","error")</script>
+  @endif
 
     <form method="POST" action="{{ route('add-admin') }}" class="form-horizontal form-label-left" id="form" data-parsley-validate>
 

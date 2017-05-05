@@ -60,21 +60,21 @@ class UserController extends Controller
         if($this->checkUser()){
             return $this->checkUser();
         }
-
-        $id = Meats::where('id', $id)->first();
-        if(!$id){
+        $id = Crypt::decrypt($id);
+        $print = Meats::where('id', $id)->first();
+        if(!$print){
             return 'Sorry';
         }
-        return view('auth.print-meat', compact('id'));
+        return view('auth.print-meat', compact('print'));
     }
 
-    public function print_all(){
+    public function print_all($code){
         
         if($this->checkUser()){
             return $this->checkUser();
         }
-
-        $meat_cuts = DB::table('meat_cuts')->select('kind','cut_type','hscode','name_number','remarks','country','image')->get();
+        $code = Crypt::decrypt($code);
+        $meat_cuts = DB::table('meat_cuts')->select('kind','cut_type','hscode','name_number','remarks','country','image')->where('show','1')->where('hscode',$code)->get();
 
         return view('auth.print-all' , compact('meat_cuts'));
     }

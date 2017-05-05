@@ -25,24 +25,24 @@
 
                     <div class="col-sm-4 col-xs-6 col-md-3 col-lg-3">
                       
-                        <img class="img-responsive" alt="" src="/mied/{{$id->image}}">
+                        <img class="img-responsive" alt="" src="/mied/{{$print->image}}">
                       <div class="text-left">
-                        <small class="text-muted">Kind : {{$id->kind}}</small>
+                        <small class="text-muted">Kind : {{$print->kind}}</small>
                       </div>
                       <div class="text-left">
-                        <small class="text-muted">Meat Cut Type : {{$id->cut_type}}</small>
+                        <small class="text-muted">Meat Cut Type : {{$print->cut_type}}</small>
                       </div>
                       <div class="text-left">
-                        <small class="text-muted">Hs Code : {{$id->hscode}}</small>
+                        <small class="text-muted">Hs Code : {{$print->hscode}}</small>
                       </div>
                       <div class="text-left">
-                        <small class="text-muted">FME Name Number : {{$id->name_number}}</small>
+                        <small class="text-muted">FME Name Number : {{$print->name_number}}</small>
                       </div>
                       <div class="text-left">
-                        <small class="text-muted">Remarks : {{$id->remarks}}</small>
+                        <small class="text-muted">Remarks : {{$print->remarks}}</small>
                       </div>
                       <div class="text-left">
-                        <small class="text-muted">Country of Origin : {{$id->country}}</small>
+                        <small class="text-muted">Country of Origin : {{$print->country}}</small>
                       </div>
                       
                       </div>

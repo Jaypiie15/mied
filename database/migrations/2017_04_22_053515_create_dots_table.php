@@ -18,6 +18,7 @@ class CreateDotsTable extends Migration
             $table->string('question');
             $table->string('answer');
             $table->string('responsible');
+            $table->string('show');
             $table->timestamps();
         });
     }

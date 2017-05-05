@@ -126,7 +126,26 @@
           </a>
         </li>
 
-
+        <li>
+          <a href="#">
+            <i class="fa fa-share"></i> <span> Logs</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ route('user-logs')}}"><i class="fa fa-circle-o"></i> Users</a></li>
+            <li><a href="{{ route('meat-logs') }}"><i class="fa fa-circle-o"></i> Meat Cuts</a></li>
+            <li><a href="{{ route('com-logs') }}"><i class="fa fa-circle-o"></i> Commodities</a></li>
+            <li><a href="{{ route('cut-logs') }}"><i class="fa fa-circle-o"></i> Meat Cut Types</a></li>
+            <li><a href="{{ route('code-logs')}}"><i class="fa fa-circle-o"></i> HS Code</a></li>
+            <li><a href="{{ route('coun-logs') }}"><i class="fa fa-circle-o"></i> Countries</a></li>
+            <li><a href="{{ route('dots-logs') }}"><i class="fa fa-circle-o"></i> Definition of Terms</a></li>
+          </ul>
+        </li>
+            
+          </ul>
+        </li>
       </ul>
     </section>
     <!-- /.sidebar -->
