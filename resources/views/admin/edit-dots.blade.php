@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-  Meat Cuts Catalogue
+  Imported Meat Catalogue
 @endsection
 
 @section('content')
@@ -96,7 +96,8 @@
             <td>{{$dot->answer}}</td>
             <td>
             <a href="{{ route('update-dots', ['id'=> Crypt::encrypt($dot->id) ]) }}" class="btn btn-primary"><i class="fa fa-pencil"></i> Edit</a>
-            <a href="{{ route('delete-dots', ['id'=>$dot->id]) }}" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</a>
+            <button id="delete" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</button>
+            <form id="del-func" action="{{ route('delete-dots', ['id'=>$dot->id]) }}">
             </td>
           </tr>
           @endforeach

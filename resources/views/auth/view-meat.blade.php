@@ -1,7 +1,8 @@
 @extends('auth.layouts.layout')
 
 @section('title')
-  Meat Cuts Catalogue
+Imported Meat Catalogue
+
 @endsection
 
   @section('content')
@@ -54,7 +55,7 @@
                         <small class="text-muted">FME Name Number : {{$meat_cut->name_number}}</small>
                       </div>
                       <div class="text-left">
-                        <small class="text-muted">Remarks : {{$meat_cut->remarks}}</small>
+                        <small class="text-muted">Description : {{$meat_cut->remarks}}</small>
                       </div>
                       <div class="text-left">
                         <small class="text-muted">Country of Origin : {{$meat_cut->country}}</small>

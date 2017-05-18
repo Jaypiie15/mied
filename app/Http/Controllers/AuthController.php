@@ -57,7 +57,9 @@ class AuthController extends Controller
                 
         }else{
             $this->incrementLoginAttempts($request);
-            return redirect()->back()->withErrors(['username'=> Lang::get('auth.failed')]);
+            $args = array('error' => '');
+                return redirect()->back()->with($args);
+            
         }
 
         

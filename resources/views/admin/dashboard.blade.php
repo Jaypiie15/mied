@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 @section('title')
-  Meat Cuts Catalogue
+  Imported Meat Catalogue
 @endsection
 
 @section('content')
@@ -32,59 +32,11 @@
 
         <!-- 1st row -->
               <div class="col-md-12">
-      <h3>No. of Datas Stored</h3>
+      <h3>No. of Data Stored</h3>
       <div class="row">
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
           <div class="small-box bg-aqua">
-            <div class="inner">
-            
-              <h3>{{$count_kinds == 0 ? 'No data Found.' : $count_kinds}}</h3>
-             
-              <p>No. of Commodities</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-folder"></i>
-            </div>
-            <a href="{{ route('edit-commodity') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-green">
-            <div class="inner">
-            
-              <h3>{{$count_types == 0 ? 'No data Found.' : $count_types}}</h3>
-              
-              <p>No. of Cut Types</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-folder"></i>
-            </div>
-            <a href="{{ route('edit-cut') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-yellow">
-            <div class="inner">
-            
-              <h3>{{$count_code == 0 ? 'No data Found.' : $count_code}}</h3>
-              
-              <p>No. of HS Code</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-folder"></i>
-            </div>
-            <a href="{{ route('edit-hscode') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-red">
             <div class="inner">
 
             <h3>{{$count_coun == 0 ? 'No data Found.' : $count_coun}}</h3>
@@ -97,6 +49,60 @@
             <a href="{{ route('edit-country') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
+            
+
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-green">
+            <div class="inner">
+
+              <h3>{{$count_kinds == 0 ? 'No data Found.' : $count_kinds}}</h3>
+             
+              <p>No. of Commodities</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-folder"></i>
+            </div>
+            <a href="{{ route('edit-commodity') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+            
+
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-yellow">
+            <div class="inner">
+
+              <h3>{{$count_types == 0 ? 'No data Found.' : $count_types}}</h3>
+              
+              <p>No. of Cut Types</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-folder"></i>
+            </div>
+            <a href="{{ route('edit-cut') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+            
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-red">
+            <div class="inner">
+
+              <h3>{{$count_code == 0 ? 'No data Found.' : $count_code}}</h3>
+              
+              <p>No. of HS Code</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-folder"></i>
+            </div>
+            <a href="{{ route('edit-hscode') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+
 
         <!--2nd row -->
 
@@ -106,7 +112,24 @@
           <!-- small box -->
           <div class="small-box bg-aqua">
             <div class="inner">
+
+              <h3>{{$count_fmes == 0 ? 'No data Found.' : $count_fmes}}</h3>
+              
+              <p>No. of FME Name & Number</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-folder"></i>
+            </div>
+            <a href="{{ route('edit-fme') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
             
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-green">
+            <div class="inner">
+
               <h3>{{$count_meats == 0 ? 'No data Found.' : $count_meats}}</h3>
              
               <p>No. of Meat Cuts</p>
@@ -119,9 +142,9 @@
         </div>
         <!-- ./col -->
         <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-green">
+          <div class="small-box bg-yellow">
             <div class="inner">
+          
               <h3>{{$count_dots == 0 ? 'No data Found.' : $count_dots}}</h3>
               <p>No. of Definition of Terms</p>
             </div>
@@ -133,11 +156,18 @@
         </div>
         <!-- ./col -->
         <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
+         <div class="small-box bg-red">
+            <div class="inner">
+
+              <h3>{{$count_faqs == 0 ? 'No data Found.' : $count_faqs}}</h3>
+              
+              <p>No. of FAQ's</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-folder"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
 
         </div>
 

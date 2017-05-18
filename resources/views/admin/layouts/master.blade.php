@@ -229,4 +229,21 @@
       });
     </script>
 
+ <script type="text/javascript">
+  $('button#delete').on('click', function(){
+  swal({   
+    title: "Are you sure?",
+    text: "You will not be able to recover this",         
+    type: "warning",   
+    showCancelButton: true,   
+    confirmButtonColor: "#DD6B55",
+    confirmButtonText: "Yes, delete it!", 
+    closeOnConfirm: false 
+  }, 
+       function(){   
+    $("#del-func").submit();
+  });
+})
+</script>
+
 </html>

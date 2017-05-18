@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-  Meat Cuts Catalogue
+  Imported Meat Catalogue
 @endsection
 
 @section('content')

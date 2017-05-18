@@ -4,9 +4,9 @@
     <!-- Logo -->
     <a href="{{ route('dashboard') }}" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>MCC</b></span>
+      <span class="logo-mini"><b>IMC</b></span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg">Meat Cuts Catalogue</span>
+      <span class="logo-lg">ImportedMeatCatalogue</span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -25,7 +25,7 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            
+            @if(Auth::user())
               <span class="hidden-xs"><label style="padding:10px;font-weight:bolder" class="label label-danger">Hello, Admin {{Auth::user()->firstname }} <i class="fa fa-caret-down"></i> </label></span>
             </a>
             
@@ -41,6 +41,9 @@
                 </div>
                 <!-- /.row -->
               </li>
+              @else
+              <span class="hidden-xs"><label style="padding:10px;font-weight:bolder" class="label label-warning"> Welcome Hacker!</label></span>
+              @endif
               <!-- Menu Footer-->
 
         </ul>
@@ -90,6 +93,19 @@
           </ul>
         </li>
 
+        <li>
+          <a href="{{ route('edit-country') }}">
+            <i class="fa fa-pencil"></i> <span>Edit Country</span>
+
+          </a>
+        </li>
+
+        <li>
+          <a href="{{ route('edit-fme') }}">
+            <i class="fa fa-pencil"></i> <span>Edit FME Name & Number</span>
+
+          </a>
+        </li>
 
         <li>
           <a href="{{ route('edit-commodity') }}">
@@ -112,16 +128,17 @@
           </a>
         </li>
 
+
         <li>
-          <a href="{{ route('edit-country') }}">
-            <i class="fa fa-pencil"></i> <span>Edit Country</span>
+          <a href="{{ route('edit-dots') }}">
+            <i class="fa fa-pencil"></i> <span>Edit Definition of Terms</span>
 
           </a>
         </li>
 
         <li>
-          <a href="{{ route('edit-dots') }}">
-            <i class="fa fa-pencil"></i> <span>Edit Definition of Terms</span>
+          <a href="{{ route('edit-faqs')}}">
+            <i class="fa fa-pencil"></i> <span>Edit FAQ's</span>
 
           </a>
         </li>
@@ -135,14 +152,17 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="{{ route('user-logs')}}"><i class="fa fa-circle-o"></i> Users</a></li>
+            <li><a href="{{ route('coun-logs') }}"><i class="fa fa-circle-o"></i> Countries</a></li>
+            <li><a href="{{ route('fme-logs') }}"><i class="fa fa-circle-o"></i> FME Name & Number</a></li>
             <li><a href="{{ route('meat-logs') }}"><i class="fa fa-circle-o"></i> Meat Cuts</a></li>
             <li><a href="{{ route('com-logs') }}"><i class="fa fa-circle-o"></i> Commodities</a></li>
             <li><a href="{{ route('cut-logs') }}"><i class="fa fa-circle-o"></i> Meat Cut Types</a></li>
             <li><a href="{{ route('code-logs')}}"><i class="fa fa-circle-o"></i> HS Code</a></li>
-            <li><a href="{{ route('coun-logs') }}"><i class="fa fa-circle-o"></i> Countries</a></li>
             <li><a href="{{ route('dots-logs') }}"><i class="fa fa-circle-o"></i> Definition of Terms</a></li>
+            <li><a href="{{ route('faqs-logs') }}"><i class="fa fa-circle-o"></i> FAQ's</a></li>
           </ul>
         </li>
+
             
           </ul>
         </li>

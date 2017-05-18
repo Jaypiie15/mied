@@ -14,11 +14,11 @@ Imported Meat Catalogue
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        <i class="fa fa-pencil"></i> Modify Definition of Terms
+        <i class="fa fa-pencil"></i> Modify FAQ's
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li class="active">Modify Definition of Terms</li>
+        <li class="active">Modify FAQ's</li>
       </ol>
     </section>
 
@@ -28,7 +28,7 @@ Imported Meat Catalogue
       <!-- Default box -->
       <div class="box">
         <div class="box-body">
-        <a href="{{ route('edit-dots')}}" class="btn btn-primary"><i class="fa fa-mail-reply"></i> Back</a>
+        <a href="{{ route('edit-faqs')}}" class="btn btn-primary"><i class="fa fa-mail-reply"></i> Back</a>
 <hr>
     @if(Session::has('update'))
         <script type="text/javascript">
@@ -39,37 +39,37 @@ Imported Meat Catalogue
         type: 'success',  
         showConfirmButton: false 
         });
-      setTimeout("location.href = '{{route('edit-dots')}}'",2000);
+      setTimeout("location.href = '{{route('edit-faqs')}}'",2000);
     </script>
   @endif
 @if(Session::has('error'))
     <script>swal("ERROR","Question and Answer Already Exists!","error")</script>
   @endif
 
-    <form method="POST" action="{{ route('update-dot',['id' => $dots->id]) }}" class="form-horizontal form-label-left" id="form" data-parsley-validate>
+    <form method="POST" action="{{ route('update-faq',['id' => $faqs->id]) }}" class="form-horizontal form-label-left" id="form" data-parsley-validate>
 
     
-    <div class="item form-group {{ $errors->has('question') ? 'has-error' : '' }}">
+    <div class="item form-group {{ $errors->has('que') ? 'has-error' : '' }}">
     <label class="control-label col-md-3 col-sm-3 col-xs-6">Question:<span class="required"> *</span></label>
     <div class="col-md-6 col-sm-6 col-xs-12"> 
 
     
-        <input type="text" name="question" value="{{$dots->question}}" class="form-control col-md-7 col-xs-12" required  data-parsley-length="[2, 100]">
-         @if($errors->has('question'))
-          <span class="help-block">{{ $errors->first('question') }}</span>
+        <input type="text" name="que" value="{{$faqs->question}}" class="form-control col-md-7 col-xs-12" required  data-parsley-length="[2, 100]">
+         @if($errors->has('que'))
+          <span class="help-block">{{ $errors->first('que') }}</span>
         @endif
 
       </div>
       </div>
 
-    <div class="item form-group {{ $errors->has('answer') ? 'has-error' : '' }}">
+    <div class="item form-group {{ $errors->has('ans') ? 'has-error' : '' }}">
     <label class="control-label col-md-3 col-sm-3 col-xs-6">Answer:<span class="required"> *</span></label>
     <div class="col-md-6 col-sm-6 col-xs-12"> 
 
     
-        <input type="text" name="answer" value="{{$dots->answer}}" class="form-control col-md-7 col-xs-12" required  data-parsley-length="[2, 100]">
-         @if($errors->has('answer'))
-          <span class="help-block">{{ $errors->first('answer') }}</span>
+        <input type="text" name="ans" value="{{$faqs->answer}}" class="form-control col-md-7 col-xs-12" required  data-parsley-length="[2, 100]">
+         @if($errors->has('ans'))
+          <span class="help-block">{{ $errors->first('ans') }}</span>
         @endif
 
       </div>

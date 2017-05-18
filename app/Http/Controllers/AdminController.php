@@ -19,7 +19,8 @@ use App\Code;
 use App\Cut;
 use App\Country;
 use App\Dot;
-
+use App\Fme;
+use App\Faq;
 
 
 class AdminController extends Controller
@@ -479,6 +480,222 @@ class AdminController extends Controller
             return view('admin.coun-logs', compact('coun_logs'));
     }
 
+    public function show_fme(){
+
+        if($this->checkUser()){
+            return $this->checkUser();
+        }
+
+        $fmes = DB::table('fmes')->select('id','name_number','show')->where('show','1')->get();
+
+            return view('admin.edit-fme', compact('fmes'));
+    }
+
+    public function add_fme(Request $request){
+
+        if($this->checkUser()){
+            return $this->checkUser();
+        }
+
+        $this->validate($request,[
+            'name' => 'required | min:2' 
+            ]);
+
+        $name = $request['name'];
+        $check = Fme::where('name_number', $name)->where('show','1')->exists();
+
+        if($check){
+
+            $args = array('error' => '');
+                return redirect()->back()->with($args);  
+        }
+
+        $fme = new Fme();
+        $fme->name_number = $name;
+        $fme->responsible = Auth::user()->firstname;
+        $fme->show = '1';
+
+        $fme->save();
+
+            $args = array('add' => '');
+            return redirect()->back()->with($args);
+
+    }
+
+    public function view_fme($id){
+
+        if($this->checkUser()){
+            return $this->checkUser();
+        }
+
+        $id = Crypt::decrypt($id);
+        $fmes = Fme::where('id', $id)->first();
+
+        if(!$id){
+            return 'Sorry';
+        }
+            return view('admin.update-fme', compact('fmes'));        
+    }
+
+    public function update_fme(Request $request, $id){
+
+        if($this->checkUser()){
+            return $this->checkUser();
+        }
+
+        $this->validate($request,[
+            'name' => 'required | min:2'
+            ]);
+
+        $name = $request['name'];
+        $check = Fme::where('name_number', $name)->where('show','1')->exists();
+
+        if($check){
+
+            $args = array('error' => '');
+                return redirect()->back()->with($args);
+
+        }
+
+        $fme = Fme::where('id', $id)->update([
+            'name_number' => $name,
+            'responsible' => Auth::user()->firstname
+            ]);
+
+            $args = array('update' => '');
+            return redirect()->back()->with($args);   
+    }
+
+    public function delete_fme($id){
+
+        if($this->checkUser()){
+            return $this->checkUser();
+        }
+
+        $del_fme = Fme::where('id', $id)->update([
+            'show' => '0',
+            'responsible' => Auth::user()->firstname
+            ]); 
+
+            $args = array('delete' => '');
+            return redirect()->back()->with($args);       
+    }
+
+    public function fme_logs(){
+
+        $fme_logs = DB::table('fmes')->orderBy('updated_at','DESC')->get();
+
+            return view('admin.fme-logs', compact('fme_logs'));
+    }
+
+    public function show_faqs(){
+
+        if($this->checkUser()){
+            return $this->checkUser();
+        }
+
+        $faqs = DB::table('faqs')->select('id','question','answer','show')->where('show','1')->get();
+
+            return view('admin.edit-faqs', compact('faqs'));
+    }
+
+    public function add_faqs(Request $request){
+
+        if($this->checkUser()){
+            return $this->checkUser();
+        }
+
+        $this->validate($request,[
+            'que' => 'required | min:2',
+            'ans' => 'required | min:2'
+            ]);
+
+            $que = $request['que'];
+            $ans = $request['ans'];
+            $check = Faq::where('question',$que)->where('answer',$ans)->where('show','1')->exists();
+
+            if($check){
+                $args = array('error' => '');
+                    return redirect()->back()->with($args);
+            }
+
+            $faq = new Faq();
+            $faq->question = $que;
+            $faq->answer = $ans;
+            $faq->responsible = Auth::user()->firstname;
+            $faq->show = '1';
+
+            $faq->save();
+
+            $args = array('add' => '');
+                return redirect()->back()->with($args);
+    }
+
+    public function view_faqs($id){
+
+        if($this->checkUser()){
+            return $this->checkUser();
+        }
+
+        $id = Crypt::decrypt($id);
+        $faqs = Faq::where('id', $id)->first();
+
+        if(!$id){
+            return 'Sorry';
+        }
+            return view('admin.update-faqs',compact('faqs'));
+    }
+
+    public function update_faqs(Request $request, $id){
+
+        if($this->checkUser()){
+            return $this->checkUser();
+        }
+
+        $this->validate($request,[
+            'que' => 'required | min:2',
+            'ans' => 'required | min:2'
+            ]);
+        $que = $request['que'];
+        $ans = $request['ans'];
+        $check = Faq::where('question',$que)->where('answer',$ans)->where('show','1')->exists();
+
+        if($check){
+
+            $args = array('error' => '');
+                return redirect()->back()->with($args);
+        }
+
+        $faqs = Faq::where('id',$id)->update([
+            'question' => $que,
+            'answer' => $ans,
+            'responsible' => Auth::user()->firstname
+            ]);
+        $args = array('update' => '');
+        return redirect()->back()->with($args);
+    }
+
+    public function delete_faqs($id){
+
+        if($this->checkUser()){
+            return $this->checkUser();
+        }
+
+        $del_faq = Faq::where('id', $id)->update([
+            'show' => '0',
+            'responsible' => Auth::user()->firstname
+            ]);
+
+        $args = array('delete' => '');
+            return redirect()->back()->with($args);
+    }
+
+    public function faqs_logs(){
+
+        $faq_logs = DB::table('faqs')->orderBy('updated_at', 'DESC')->get();
+            return view('admin.faqs-logs', compact('faq_logs'));
+    }
+
     public function show_dots(){
 
         if($this->checkUser()){
@@ -573,7 +790,7 @@ class AdminController extends Controller
         }
 
 
-        $del_country = Dot::where('id',$id)->update([
+        $del_dots = Dot::where('id',$id)->update([
             'show' => '0',
             'responsible' => Auth::user()->firstname
             ]);
@@ -595,12 +812,13 @@ class AdminController extends Controller
             return $this->checkUser();
         }
 
-        $kinds      = DB::table('commodities')->select('kind')->get();
-        $cut_types  = DB::table('cuts')->select('cut_type')->get();
-        $codes      = DB::table('codes')->select('hscode')->get();
-        $countrys   = DB::table('countries')->select('country')->get();
+        $kinds      = DB::table('commodities')->select('kind')->where('show','1')->get();
+        $cut_types  = DB::table('cuts')->select('cut_type')->where('show','1')->get();
+        $codes      = DB::table('codes')->select('hscode')->where('show','1')->get();
+        $countrys   = DB::table('countries')->select('country')->where('show','1')->get();
+        $fmes       = DB::table('fmes')->select('name_number')->where('show','1')->get();
 
-        return view('admin.add-meatcuts', compact('kinds','cut_types','codes','countrys'));
+        return view('admin.add-meatcuts', compact('kinds','cut_types','codes','countrys','fmes'));
     }
 
     public function show_meat(){
@@ -609,7 +827,7 @@ class AdminController extends Controller
             return $this->checkUser();
         }
 
-        $meats = DB::table('meat_cuts')->select('kind','cut_type','hscode','name_number','remarks','country')->where('show','1')->groupBy('hscode')->get();
+        $meats = DB::table('meat_cuts')->select('kind','cut_type','hscode','name_number','remarks','country')->where('show','1')->get();
 
         return view('admin.show-meat' , compact('meats'));
     }
@@ -804,15 +1022,17 @@ class AdminController extends Controller
         $count_types = DB::table('cuts')->select('cut_type','show')->where('show','1')->count();
         $count_code  = DB::table('codes')->select('hscode','show')->where('show','1')->count();
         $count_coun  = DB::table('countries')->select('country','show')->where('show','1')->count();
-        $count_meats = DB::table('meat_cuts','show')->where('show','1')->count();
+        $count_meats = DB::table('meat_cuts')->where('show','1')->count();
         $count_dots  = DB::table('dots')->select('question','answer')->where('show','1')->count();
+        $count_fmes  = DB::table('fmes')->select('name_number')->where('show','1')->count();
+        $count_faqs  = DB::table('faqs')->select('faqs')->where('show','1')->count();
         $count_admins = DB::table('users')->select('role')->where('role', '0')->where('show','1')->count();
         $count_users = DB::table('users')->select('role')->where('role', '1')->where('show','1')->count();
         $count_active = DB::table('users')->select('status')->where('status', 'activated')->where('show','1')->count();
         $count_inactive = DB::table('users')->select('status')->where('status', '0')->where('show','1')->count();
 
 
-            return view('admin.dashboard', compact('count_kinds','count_types','count_code','count_coun','count_meats','count_dots','count_admins','count_users','count_active','count_inactive'));        
+            return view('admin.dashboard', compact('count_kinds','count_types','count_code','count_coun','count_meats','count_dots','count_fmes','count_faqs','count_admins','count_users','count_active','count_inactive'));        
     }
 
     public function show_users(){
@@ -857,19 +1077,18 @@ class AdminController extends Controller
         $first = $request['firstname'];
         $middle = $request['middlename'];
         $status = $request['status'];
-        date_default_timezone_set('Asia/Manila');
-        $date = date('F j, \ Y h:i A');
+
 
         $country = User::where('id',$id)->update([
             'lastname' => $last,
             'firstname' => $first,
             'middlename' => $middle,
             'status' => $status,
-            'responsible' => Auth::user()->firstname,
-            'updated' => $date
+            'responsible' => Auth::user()->firstname
             ]);
 
             $args = array('update' => '');
             return redirect()->back()->with($args);
     }
+
 }

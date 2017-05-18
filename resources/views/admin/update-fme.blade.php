@@ -1,12 +1,13 @@
 @extends('admin.layouts.master')
 
 @section('title')
-Imported Meat Catalogue
+  Imported Meat Catalogue
 @endsection
 
-  @section('content')
+@section('content')
 
   @include('admin.include.header')
+
   <!-- =============================================== -->
 
   <!-- Content Wrapper. Contains page content -->
@@ -14,11 +15,11 @@ Imported Meat Catalogue
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        <i class="fa fa-pencil"></i> Modify Meat Cut Type
+        <i class="fa fa-pencil"></i> Modify FME Name & Number
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li class="active">Modify Meat Cut Type</li>
+        <li class="active">Modify FME Name & Number</li>
       </ol>
     </section>
 
@@ -28,9 +29,10 @@ Imported Meat Catalogue
       <!-- Default box -->
       <div class="box">
         <div class="box-body">
-        <a href="{{ route('edit-cut')}}" class="btn btn-primary"><i class="fa fa-mail-reply"></i> Back</a>
+
+          <a href="{{ route('edit-fme')}}" class="btn btn-primary"><i class="fa fa-mail-reply"></i> Back</a>
 <hr>
-    @if(Session::has('update'))
+      @if(Session::has('update'))
         <script type="text/javascript">
       swal({   
         title: "SUCCESS",  
@@ -39,26 +41,24 @@ Imported Meat Catalogue
         type: 'success',  
         showConfirmButton: false 
         });
-      setTimeout("location.href = '{{route('edit-cut')}}'",2000);
+      setTimeout("location.href = '{{route('edit-fme')}}'",2000);
     </script>
   @endif
-@if(Session::has('error'))
-    <script>swal("ERROR","Cut Type Already Exists!","error")</script>
+      @if(Session::has('error'))
+    <script>swal("ERROR","FME Name & Number Already Exists!","error")</script>
   @endif
-
-    <form method="POST" action="{{ route('update-cut_type',['id' => $cuts->id]) }}" class="form-horizontal form-label-left" id="form" data-parsley-validate>
-
+    <form method="POST" action="{{ route('update-fme',['id'=> $fmes->id]) }}" class="form-horizontal form-label-left" id="form" data-parsley-validate>
     
-    <div class="item form-group {{ $errors->has('cut') ? 'has-error' : '' }}">
-    <label class="control-label col-md-3 col-sm-3 col-xs-6">Meat Cut Type<span class="required"> *</span></label>
+    
+    <div class="item form-group {{ $errors->has('name') ? 'has-error' : '' }}">
+    <label class="control-label col-md-3 col-sm-3 col-xs-6">FME Name & Number<span class="required"> *</span></label>
     <div class="col-md-6 col-sm-6 col-xs-12"> 
 
     
-        <input type="text" name="cut" value="{{$cuts->cut_type}}" class="form-control col-md-7 col-xs-12" required  data-parsley-length="[2, 100]">
-         @if($errors->has('cut'))
-          <span class="help-block">{{ $errors->first('cut') }}</span>
+        <input type="text" name="name" value="{{$fmes->name_number}}" class="form-control col-md-7 col-xs-12" required  data-parsley-length="[2, 100]">
+        @if($errors->has('name'))
+          <span class="help-block">{{ $errors->first('name') }}</span>
         @endif
-
       </div>
       </div>
 
@@ -68,5 +68,6 @@ Imported Meat Catalogue
           <button type="submit" class="btn btn-primary btn-block btn-flat" name="btn-update">Update</button>
         </div>
         {{csrf_field()}}
-        </form>
-     @endsection 
+      </form>
+      
+@endsection

@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-  Meat Cuts Catalogue
+  Imported Meat Catalogue
 @endsection
 
   @section('content')
@@ -56,7 +56,7 @@
                         <small class="text-muted">FME Name Number : {{$meat_cut->name_number}}</small>
                       </div>
                       <div class="text-left">
-                        <small class="text-muted">Remarks : {{$meat_cut->remarks}}</small>
+                        <small class="text-muted">Description : {{$meat_cut->remarks}}</small>
                       </div>
                       <div class="text-left">
                         <small class="text-muted">Country of Origin : {{$meat_cut->country}}</small>
@@ -64,7 +64,10 @@
                       </a>
                       <div class="text-center">                      
                       <a href="{{ route('update-meatcut', ['id'=> Crypt::encrypt($meat_cut->id) ]) }}" class="btn btn-primary btn btn-xs fa fa-pencil"></a>
-                      <a href="{{ route('delete-meatcut', ['id'=>$meat_cut->id]) }}" class="btn btn-danger btn btn-xs fa fa-trash"></a>
+                      <button id="delete" class="btn btn-danger btn btn-xs"><i class="fa fa-trash"></i></button>
+                      <form id="del-func" action="{{ route('delete-meatcut', ['id'=>$meat_cut->id]) }}">
+
+                      </form> 
                       </div>
                       
                       </div>

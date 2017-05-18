@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-	Meat Cuts Catalogue
+	Imported Meat Catalogue
 @endsection
 
 	@section('content')
@@ -31,29 +31,27 @@
 <hr>
 
 
-      <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+      <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
         <thead>
           <tr>
+            <th>Country</th>
+            <th>FME Name Number</th>
             <th>Commodity</th>
             <th>Meat Cut Type</th>
             <th>HS Code</th>
-            <th>FME Name Number</th>
-            <th>Remarks</th>
-            <th>Country</th>
             <th>Action</th>
         </thead>
         <tbody>
         	
         @foreach($meats as $meat)
         <tr>
+        <td>{{$meat->country}}</td>
+        <td>{{$meat->name_number}}</td>
         <td>{{$meat->kind}}</td>
         <td>{{$meat->cut_type}}</td>
         <td>{{$meat->hscode}}</td>
-        <td>{{$meat->name_number}}</td>
-        <td>{{$meat->remarks}}</td>
-        <td>{{$meat->country}}</td>
 				<td>
-				<a href="{{ route('view-meat',['hscode' => Crypt::encrypt($meat->hscode) ]) }}" class="btn btn-primary"><i class="fa fa-eye"></i> Click to View Images</a>
+				<a href="{{ route('view-meat',['hscode' => Crypt::encrypt($meat->hscode) ]) }}" class="btn btn-primary btn btn-sm"><i class="fa fa-eye"></i> Click to View Images</a>
         @endforeach
 				</td>
 				</tr>

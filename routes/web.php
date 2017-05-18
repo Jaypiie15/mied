@@ -41,7 +41,10 @@ Route::get('/auth/print-all/{code}',[
 	'as' => 'print-all',
 	'uses' => 'UserController@print_all'
 ]);
-
+Route::get('/auth/show-faqs',[
+	'as' => 'show-faqs',
+	'uses' => 'UserController@show_faqs'
+]);
 
 Route::get('/admin/logout',[
 	'as' => 'admin-logout',
@@ -79,9 +82,17 @@ Route::get('/admin/edit-country',[
 	'as' => 'edit-country',
 	'uses' => 'AdminController@show_country'
 ]);
+Route::get('/admin/edit-fme',[
+	'as' => 'edit-fme',
+	'uses' => 'AdminController@show_fme'
+]);
 Route::get('/admin/edit-dots',[
 	'as' => 'edit-dots',
 	'uses' => 'AdminController@show_dots'
+]);
+Route::get('/admin/edit-faqs',[
+	'as' => 'edit-faqs',
+	'uses' => 'AdminController@show_faqs'
 ]);
 Route::get('/admin/users',[
 	'as' => 'show-users',
@@ -107,6 +118,10 @@ Route::get('/admin/coun-logs',[
 	'as' => 'coun-logs',
 	'uses' => 'AdminController@coun_logs'
 ]);
+Route::get('/admin/fme-logs',[
+	'as' => 'fme-logs',
+	'uses' => 'AdminController@fme_logs'
+]);
 Route::get('/admin/meat-logs',[
 	'as' => 'meat-logs',
 	'uses' => 'AdminController@meat_logs'
@@ -114,6 +129,10 @@ Route::get('/admin/meat-logs',[
 Route::get('/admin/dots-logs',[
 	'as' => 'dots-logs',
 	'uses' => 'AdminController@dots_logs'
+]);
+Route::get('/admin/faq-logs',[
+	'as' => 'faqs-logs',
+	'uses' => 'AdminController@faqs_logs'
 ]);
 
 
@@ -157,6 +176,14 @@ Route::get('/admin/update-country/{id}',[
 	'as' => 'update-country',
 	'uses' => 'AdminController@view_country'
 ]);
+Route::get('/admin/update-fmes/{id}',[
+	'as' => 'update-fmes',
+	'uses' => 'AdminController@view_fme'
+]);
+Route::get('/admin/delete-fme/{id}',[
+	'as' => 'delete-fme',
+	'uses' => 'AdminController@delete_fme'
+]);
 Route::get('/admin/delete-country/{id}',[
 	'as' => 'delete-country',
 	'uses' => 'AdminController@delete_country'
@@ -164,6 +191,14 @@ Route::get('/admin/delete-country/{id}',[
 Route::get('/admin/update-dots/{id}',[
 	'as' => 'update-dots',
 	'uses' => 'AdminController@view_dots'
+]);
+Route::get('/admin/update-faqs/{id}',[
+	'as' => 'update-faqs',
+	'uses' => 'AdminController@view_faqs'
+]);
+Route::get('/admin/delete-faqs/{id}',[
+	'as' => 'delete-faqs',
+	'uses' => 'AdminController@delete_faqs'
 ]);
 Route::get('/admin/delete-dots/{id}',[
 	'as' => 'delete-dots',
@@ -173,6 +208,7 @@ Route::get('/admin/edit-users/{id}',[
 	'as' => 'edit-users',
 	'uses' => 'AdminController@edit_users'
 ]);
+
 
 
 
@@ -220,13 +256,29 @@ Route::post('/admin/update-country/{id}',[
 	'as' => 'update-coun',
 	'uses' => 'AdminController@update_country'
 ]);
+Route::post('/admin/add-fme',[
+	'as' => 'add-fme',
+	'uses' => 'AdminController@add_fme'
+]);
+Route::post('/admin/update-fme/{id}',[
+	'as' => 'update-fme',
+	'uses' => 'AdminController@update_fme'
+]);
 Route::post('/admin/add-dots', [
 	'as' => 'add-dots',
 	'uses' => 'AdminController@add_dots'
 ]);
+Route::post('/admin/add-faqs',[
+	'as' => 'add-faqs',
+	'uses' => 'AdminController@add_faqs'
+]);
 Route::post('/admin/update-dots/{id}', [
 	'as' => 'update-dot',
 	'uses' => 'AdminController@update_dots'
+]);
+Route::post('/admin/update-faqs/{id}',[
+	'as' => 'update-faq',
+	'uses' => 'AdminController@update_faqs'
 ]);
 Route::post('/admin/update-users/{id}',[
 	'as' => 'update-user',

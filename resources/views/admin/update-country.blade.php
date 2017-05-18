@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-  Meat Cuts Catalogue
+Imported Meat Catalogue
 @endsection
 
   @section('content')
@@ -50,7 +50,7 @@
 
     
     <div class="item form-group {{ $errors->has('country') ? 'has-error' : '' }}">
-    <label class="control-label col-md-3 col-sm-3 col-xs-6">HS Code<span class="required"> *</span></label>
+    <label class="control-label col-md-3 col-sm-3 col-xs-6">Country<span class="required"> *</span></label>
     <div class="col-md-6 col-sm-6 col-xs-12"> 
 
     

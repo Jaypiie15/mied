@@ -29,7 +29,7 @@ class UserController extends Controller
     	 if($this->checkUser()){
             return $this->checkUser();
         }
-    	$meatss = DB::table('meat_cuts')->select('kind','cut_type','hscode','name_number','remarks','country')->groupBy('hscode')->get();
+    	$meatss = DB::table('meat_cuts')->select('kind','cut_type','hscode','name_number','remarks','country') ->get();
 
     		return view('auth.main', compact('meatss'));
     }
@@ -54,6 +54,16 @@ class UserController extends Controller
 
             return view('auth.show-dots', compact('dots'));
         }
+
+    public function show_faqs(){
+
+        if($this->checkUser()){
+            return $this->checkUser();
+        }
+
+        $faqs = DB::table('faqs')->select('id','question','answer')->get();
+            return view('auth.show-faqs', compact('faqs'));
+    }
 
         public function print_meat($id){
 

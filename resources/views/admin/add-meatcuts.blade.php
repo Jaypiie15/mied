@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-  Meat Cuts Catalogue
+  Imported Meat Catalogue
 @endsection
 
   @section('content')
@@ -35,6 +35,42 @@
   @endif
 
     <form method="POST" action="{{ route('add-meatcut') }}" class="form-horizontal form-label-left" id="form" enctype="multipart/form-data" data-parsley-validate>
+
+        <div class="item form-group {{ $errors->has('country') ? 'has-error' : '' }}">
+           <label class="control-label col-md-3 col-sm-3 col-xs-12">Country of Origin <span class="required"> *</span></label>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+                  <select name="country" class="form-control select2" required>
+                    <option value="">-- Select Country of Origin --</option>
+          @if($countrys)
+        @foreach($countrys as $coun)
+                            <option value="{{ $coun->country }}">{{$coun->country}}</option>
+          @endforeach
+          @endif
+                  </select>
+                   
+            @if($errors->has('country'))
+          <span class="help-block">{{ $errors->first('country') }}</span>
+        @endif
+        </div>
+    </div>
+
+    <div class="item form-group {{ $errors->has('number') ? 'has-error' : '' }}">
+    <label class="control-label col-md-3 col-sm-3 col-xs-6">FME Name & Number<span class="required"> *</span></label>
+    <div class="col-md-6 col-sm-6 col-xs-12"> 
+
+                  <select name="number" class="form-control select2" required>
+                    <option selected="selected" value="">-- Select FME Name & Number --</option>
+          @if($fmes)
+        @foreach($fmes as $fme)
+                            <option value="{{ $fme->name_number }}">{{$fme->name_number}}</option>
+          @endforeach
+          @endif
+                  </select>
+            @if($errors->has('number'))
+          <span class="help-block">{{ $errors->first('number') }}</span>
+        @endif
+        </div>
+    </div>
 
 
     <div class="item form-group {{ $errors->has('commodity') ? 'has-error' : '' }}">
@@ -92,20 +128,9 @@
         </div>
     </div>
 
-    <div class="item form-group {{ $errors->has('number') ? 'has-error' : '' }}">
-    <label class="control-label col-md-3 col-sm-3 col-xs-6">FME Name & Number<span class="required"> *</span></label>
-    <div class="col-md-6 col-sm-6 col-xs-12"> 
-
-    
-        <input type="text" name="number" class="form-control col-md-7 col-xs-12" required>
-            @if($errors->has('number'))
-          <span class="help-block">{{ $errors->first('number') }}</span>
-        @endif
-      </div>
-      </div>
 
     <div class="item form-group {{ $errors->has('remarks') ? 'has-error' : '' }}">
-    <label class="control-label col-md-3 col-sm-3 col-xs-6">Remarks<span class="required"> *</span></label>
+    <label class="control-label col-md-3 col-sm-3 col-xs-6">Description<span class="required"> *</span></label>
     <div class="col-md-6 col-sm-6 col-xs-12"> 
 
     
@@ -116,23 +141,7 @@
       </div>
       </div>
 
-    <div class="item form-group {{ $errors->has('country') ? 'has-error' : '' }}">
-           <label class="control-label col-md-3 col-sm-3 col-xs-12">Country of Origin <span class="required"> *</span></label>
-        <div class="col-md-6 col-sm-6 col-xs-12">
-                  <select name="country" class="form-control select2" required>
-                    <option value="">-- Select Country of Origin --</option>
-          @if($countrys)
-        @foreach($countrys as $coun)
-                            <option value="{{ $coun->country }}">{{$coun->country}}</option>
-          @endforeach
-          @endif
-                  </select>
-                   
-            @if($errors->has('country'))
-          <span class="help-block">{{ $errors->first('country') }}</span>
-        @endif
-        </div>
-    </div>
+
 
 
       <div class="item form-group {{ $errors->has('images') ? 'has-error' : '' }}">
