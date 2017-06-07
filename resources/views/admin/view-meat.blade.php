@@ -64,12 +64,39 @@
                       </a>
                       <div class="text-center">                      
                       <a href="{{ route('update-meatcut', ['id'=> Crypt::encrypt($meat_cut->id) ]) }}" class="btn btn-primary btn btn-xs fa fa-pencil"></a>
-                      <button id="delete" class="btn btn-danger btn btn-xs"><i class="fa fa-trash"></i></button>
-                      <form id="del-func" action="{{ route('delete-meatcut', ['id'=>$meat_cut->id]) }}">
+                      <a href="#" data-toggle="modal" class="btn btn-danger btn btn-xs" data-target="#myModal2{{$meat_cut->id}}"><i class="fa fa-trash"></i></a>
 
-                      </form> 
                       </div>
+
                       
+                        <div class="modal fade" id="myModal2{{$meat_cut->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title" id="myModalLabel"><i class="fa fa-trash"></i> Delete Meatcut</h4>
+                                </div>
+                                <div class="modal-body">
+                                <form action="{{ route('delete-meatcut', ['id' => $meat_cut->id]) }}">
+                                
+                                  Are you sure you want to delete this?
+
+                                </div>
+
+
+                                <div class="modal-footer">
+                                <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> Yes, delete it</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                     </form>
+                                    </div>
+                                    
+                                    
+                                    </div>
+                                </div>
+                            </div>
+                        
+
+
                       </div>
                     @endforeach
                     @endif

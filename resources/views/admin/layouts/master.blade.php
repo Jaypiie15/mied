@@ -6,9 +6,7 @@
   <title>@yield('title')</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <meta http-equiv="cache-control" content="private, max-age=0, no-cache">
-  <meta http-equiv="pragma" content="no-cache">
-  <meta http-equiv="expires" content="0"> 
+  <meta id="token" name="csrf-token" content="{{csrf_token()}}">
   <!-- Bootstrap 3.3.6 -->
   <link rel="stylesheet" href="{{ asset('resources/src/bootstrap/css/bootstrap.min.css') }}">
   <!-- Font Awesome -->
@@ -21,10 +19,11 @@
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="{{ asset('resources/src/dist/css/skins/_all-skins.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('resources/src/build/sweetalert.css') }}">
-  <script type="text/javascript" src="{{ asset('resources/src/build/sweetalert-dev.js') }}"></script>
-  <script type="text/javascript" src="{{ asset('resources/src/build/sweetalert.min.js') }}"></script>
   <link rel="stylesheet" href="{{ asset('resources/src/plugins/parsleyjs/src/parsley.css') }}">
+
+      <!-- PNotify -->
+    <link href="{{ asset('resources/src/plugins/pnotify/dist/pnotify.css') }}" rel="stylesheet">
+
 
   <link href="{{ asset('resources/src/plugins/datatables.net-bs/css/dataTables.bootstrap.min.css') }}" rel="stylesheet">
   <link href="{{ asset('resources/src/plugins/datatables.net-buttons-bs/css/buttons.bootstrap.min.css') }}" rel="stylesheet">
@@ -32,6 +31,9 @@
   <link href="{{ asset('resources/src/plugins/datatables.net-responsive-bs/css/responsive.bootstrap.min.css') }}" rel="stylesheet">
   <link href="{{ asset('resources/src/plugins/datatables.net-scroller-bs/css/scroller.bootstrap.min.css') }}" rel="stylesheet">
   <link rel="stylesheet" href="{{ asset('resources/src/plugins/select2/select2.min.css') }}">
+
+
+
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -91,6 +93,10 @@
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('resources/src/dist/js/demo.js') }}"></script>
 
+    <!-- PNotify -->
+    <script src="{{ asset('resources/src/plugins/pnotify/dist/pnotify.js') }}"></script>
+
+
 <script src="{{ asset('resources/src/plugins/datatables.net/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('resources/src/plugins/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
 <script src="{{ asset('resources/src/plugins/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
@@ -109,6 +115,7 @@
 <script src="{{ asset('resources/src/plugins/select2/select2.full.min.js') }}"></script>
 <script src="{{ asset('resorces/src/plugins/parsleyjs/parsley.js') }}"></script>
 <script src="{{ asset('resources/src/plugins/parsleyjs/dist/parsley.min.js') }}"></script>
+  <script src="{{ asset('resources/src/pnotify/dist/pnotify.js') }}"></script>
 
     <!-- Datatables -->
 <script type="text/javascript">
@@ -229,21 +236,6 @@
       });
     </script>
 
- <script type="text/javascript">
-  $('button#delete').on('click', function(){
-  swal({   
-    title: "Are you sure?",
-    text: "You will not be able to recover this",         
-    type: "warning",   
-    showCancelButton: true,   
-    confirmButtonColor: "#DD6B55",
-    confirmButtonText: "Yes, delete it!", 
-    closeOnConfirm: false 
-  }, 
-       function(){   
-    $("#del-func").submit();
-  });
-})
-</script>
+
 
 </html>

@@ -42,17 +42,16 @@ class AdminController extends Controller
         }
     }
 
-
-    public function register(){
+    public function show_com(){
 
         if($this->checkUser()){
             return $this->checkUser();
         }
 
-        return view('admin.register');
+        return view('admin.edit-commodity');
     }
 
-    public function show_com(){
+    public function com_tbl(){
 
         if($this->checkUser()){
             return $this->checkUser();
@@ -60,7 +59,7 @@ class AdminController extends Controller
 
         $coms = DB::table('commodities')->select('id','kind','show')->where('show', '1')->get();
 
-        return view('admin.edit-commodity', compact('coms'));
+        return view('admin.show-com', compact('coms'));
     }
 
     public function add_com(Request $request){
@@ -78,81 +77,75 @@ class AdminController extends Controller
 
         if($check){
 
-        $args = array('error'=>'');
-            return redirect()->back()->with($args);
+            return response()->json(['error' => 'error']);
 
         }
 
         $com       = new Commodity();
-        $com->kind = $commodity;
+        $com->kind = ucfirst($commodity);
         $com->responsible = Auth::user()->firstname;
         $com->show = '1';
         
 
         $com->save();
-
-
-        $args = array('add'=>'');
-        return redirect()->back()->with($args);
+        $args = array('save' => 'save');
+        return response()->json($args);
 
     }
 
-    public function view_com($id){
+    public function view_com(Request $request){
 
         if($this->checkUser()){
             return $this->checkUser();
         }
-        $id = Crypt::decrypt($id);
-        $coms = Commodity::where('id', $id)->first();
-        if(!$id){
-            return 'Sorry';
+        
+        if($request->ajax())
+        {
+            return response(Commodity::find($request->id));
         }
-            return view('admin.update-commodity', compact('coms'));
     }
 
-    public function update_com(Request $request, $id){
+    public function update_com(Request $request){
 
         if($this->checkUser()){
             return $this->checkUser();
         }
 
         $this->validate($request, [
-            'commodity' => 'required | min:2'
+            'com' => 'required | min:2'
             ]);
 
-        $commodity = $request['commodity'];
+        $commodity = $request['com'];
         $check = Commodity::where('kind', $commodity)->where('show','1')->exists();
 
 
         if($check){
-
-        $args = array('error'=>'');
-            return redirect()->back()->with($args);
+            $args = array('error' => 'error');
+            return response()->json($args);
 
         }
 
-        $com = Commodity::where('id',$id)->update([
-            'kind' => $commodity,
-            'responsible' => Auth::user()->firstname
-            ]);
+        $com = Commodity::find($request->id);
+        $com->kind = ucfirst($commodity);
+        $com->responsible = Auth::user()->firstname;
+        $com->save();
 
-            $args = array('update' => '');
-            return redirect()->back()->with($args);
+            $args = array('update' => 'update');
+            return response()->json($args);
     }
 
-    public function delete_com(Request $request, $id){
+    public function delete_com(Request $request){
 
         if($this->checkUser()){
             return $this->checkUser();
         }
 
-        $com_del = Commodity::where('id', $id)->update([
-            'show' => '0',
-            'responsible' => Auth::user()->firstname
-            ]);
+        $com_del = Commodity::find($request->id);
+        $com_del->responsible = Auth::user()->firstname;
+        $com_del->show = '0';
+        $com_del->save();
 
-            $args = array('delete' => '');
-            return redirect()->back()->with($args);
+            return response()->json();
 
     }
 
@@ -173,9 +166,18 @@ class AdminController extends Controller
             return $this->checkUser();
         }
 
+            return view('admin.edit-hscode');
+    }
+
+    public function code_tbl(){
+
+        if($this->checkUser()){
+            return $this->checkUser();
+        }
+
         $codes = DB::table('codes')->select('id','hscode','show')->where('show','1')->get();
 
-            return view('admin.edit-hscode', compact('codes'));
+            return view('admin.show-code', compact('codes'));
     }
 
     public function add_hscode(Request $request){
@@ -194,9 +196,9 @@ class AdminController extends Controller
             if($check)
             {
 
-              $args = array('error' => '');
+              $args = array('error' => 'error');
               
-                return redirect()->back()->with($args);  
+                return response()->json($args);  
             }
 
             $hscode = new Code();
@@ -206,22 +208,21 @@ class AdminController extends Controller
 
             $hscode->save();
 
-            $args = array('add' => '');
-            return redirect()->back()->with($args);
+            $args = array('save' => 'save');
+            return response()->json($args);
     }
-    public function view_hscode($id){
+    public function view_hscode(Request $request){
 
         if($this->checkUser()){
             return $this->checkUser();
         }
-        $id = Crypt::decrypt($id);
-        $codes = Code::where('id', $id)->first();
-        if(!$id){
-            return 'Sorry';
+
+        if($request->ajax())
+        {
+            return response(Code::find($request->id));
         }
-            return view('admin.update-hscode', compact('codes'));
     }
-    public function update_hscode(Request $request, $id){
+    public function update_hscode(Request $request){
 
         if($this->checkUser()){
             return $this->checkUser();
@@ -236,36 +237,40 @@ class AdminController extends Controller
 
         if($check){
 
-            $args = array('error' => '');
-                return redirect()->back()->with($args);
+            $args = array('error' => 'error');
+                return response()->json($args);
 
         }
-        $code = Code::where('id',$id)->update([
-            'hscode' => $cod,
-            'responsible' => Auth::user()->firstname
-            ]);
 
-            $args = array('update' => '');
-            return redirect()->back()->with($args);
+        $code = Code::find($request->id);
+        $code->hscode = $cod;
+        $code->responsible = Auth::user()->firstname;
+        $code->save();
+
+            $args = array('update' => 'update');
+            return response()->json($args);
     }
 
-    public function delete_hscode($id){
+    public function delete_hscode(Request $request){
 
         if($this->checkUser()){
             return $this->checkUser();
         }
 
 
-        $del_code = Code::where('id',$id)->update([
-            'show' => '0',
-            'responsible' => Auth::user()->firstname
-            ]);
+        $code_del = Code::find($request->id);
+        $code_del->responsible = Auth::user()->firstname;
+        $code_del->show = '0';
+        $code_del->save();
 
-            $args = array('delete' => '');
-            return redirect()->back()->with($args);
+            return response()->json();
     }
 
     public function code_logs(){
+
+        if($this->checkUser()){
+            return $this->checkUser();
+        }
 
         $code_logs = DB::table('codes')->orderBy('updated_at', 'DESC')->get();
 
@@ -278,9 +283,18 @@ class AdminController extends Controller
             return $this->checkUser();
         }
 
+            return view('admin.edit-cut');
+    }
+
+    public function cut_tbl(){
+
+        if($this->checkUser()){
+            return $this->checkUser();
+        }
+
         $cuts = DB::table('cuts')->select('id','cut_type','show')->where('show','1')->get();
 
-            return view('admin.edit-cut', compact('cuts'));
+            return view('admin.show-cut', compact('cuts'));
     }
 
     public function add_cut(Request $request){
@@ -298,34 +312,33 @@ class AdminController extends Controller
 
             if($check){
 
-                $args = array('error' => '');
-                    return redirect()->back()->with($args); 
+                $args = array('error' => 'error');
+                    return response()->json($args); 
 
             }
 
             $cut_type = new Cut();
-            $cut_type->cut_type = $cut;
+            $cut_type->cut_type = ucfirst($cut);
             $cut_type->responsible = Auth::user()->firstname;
             $cut_type->show = '1';
 
             $cut_type->save();
 
-            $args = array('add' => '');
-            return redirect()->back()->with($args);
+            $args = array('save' => 'save');
+            return response()->json($args);
     }
-    public function view_cut($id){
+    public function view_cut(Request $request){
 
         if($this->checkUser()){
             return $this->checkUser();
         }
-        $id = Crypt::decrypt($id);
-        $cuts = Cut::where('id', $id)->first();
-        if(!$id){
-            return 'Sorry';
+
+        if($request->ajax())
+        {
+            return response(Cut::find($request->id));
         }
-            return view('admin.update-cut_type', compact('cuts'));
     }
-    public function update_cut(Request $request, $id){
+    public function update_cut(Request $request){
 
         if($this->checkUser()){
             return $this->checkUser();
@@ -341,36 +354,39 @@ class AdminController extends Controller
 
         if($check){
 
-            $args = array('error' => '');
+            $args = array('error' => 'error');
 
-                return redirect()->back()->with($args);            
+                return response()->json($args);            
         }
-        $cut = Cut::where('id',$id)->update([
-            'cut_type' => $cu,
-            'responsible' => Auth::user()->firstname
-            ]);
+        $cut = Cut::find($request->id);
+        $cut->cut_type = ucfirst($cu);
+        $cut->responsible = Auth::user()->firstname;
+        $cut->save();
 
-            $args = array('update' => '');
-            return redirect()->back()->with($args);
+            $args = array('update' => 'update');
+            return response()->json($args);
     }
 
-    public function delete_cut($id){
+    public function delete_cut(Request $request){
 
         if($this->checkUser()){
             return $this->checkUser();
         }
 
 
-        $del_cut = Cut::where('id',$id)->update([
-            'show' => '0',
-            'responsible' => Auth::user()->firstname
-            ]);
+        $del_cut = Cut::find($request->id);
+        $del_cut->responsible = Auth::user()->firstname;
+        $del_cut->show = '0';
+        $del_cut->save();
 
-            $args = array('delete' => '');
-            return redirect()->back()->with($args);
+            return response()->json();
     }
 
     public function cut_logs(){
+
+        if($this->checkUser()){
+            return $this->checkUser();
+        }
 
         $cut_logs = DB::table('cuts')->orderBy('updated_at', 'DESC')->get();
 
@@ -383,9 +399,18 @@ class AdminController extends Controller
             return $this->checkUser();
         }
 
+            return view('admin.edit-country');
+    }
+
+    public function coun_tbl(){
+
+        if($this->checkUser()){
+            return $this->checkUser();
+        }
+
         $countrys = DB::table('countries')->select('id','country','show')->where('show','1')->get();
 
-            return view('admin.edit-country', compact('countrys'));
+            return view('admin.show-coun', compact('countrys'));
     }
 
     public function add_country(Request $request){
@@ -403,34 +428,32 @@ class AdminController extends Controller
 
             if($check){
 
-            $args = array('error' => '');
-                return redirect()->back()->with($args); 
+            $args = array('error' => 'error');
+                return response()->json($args); 
 
             }
 
             $country = new Country();
-            $country->country = $coun;
+            $country->country = ucfirst($coun);
             $country->responsible = Auth::user()->firstname;
             $country->show = '1';
 
             $country->save();
 
-            $args = array('add' => '');
-            return redirect()->back()->with($args);
+            $args = array('save' => 'save');
+            return response()->json($args);
     }
-    public function view_country($id){
+    public function view_country(Request $request){
 
         if($this->checkUser()){
             return $this->checkUser();
         }
-        $id = Crypt::decrypt($id);
-        $couns = Country::where('id', $id)->first();
-        if(!$id){
-            return 'Sorry';
+
+        if($request->ajax()){
+            return response(Country::find($request->id));
         }
-            return view('admin.update-country', compact('couns'));
     }
-    public function update_country(Request $request, $id){
+    public function update_country(Request $request){
 
         if($this->checkUser()){
             return $this->checkUser();
@@ -445,35 +468,38 @@ class AdminController extends Controller
 
         if($check){
 
-        $args = array('error' => '');
-            return redirect()->back()->with($args);
+        $args = array('error' => 'error');
+            return response()->json($args);
 
         }
-        $country = Country::where('id',$id)->update([
-            'country' => $request['country'],
-            'responsible' => Auth::user()->firstname
-            ]);
+        $country = Country::find($request->id);
+        $country->country = ucfirst($coun);
+        $country->responsible = Auth::user()->firstname;
+        $country->save();
 
-            $args = array('update' => '');
-            return redirect()->back()->with($args);
+            $args = array('update' => 'update');
+            return response()->json($args);
     }
 
-    public function delete_country($id){
+    public function delete_country(Request $request){
 
         if($this->checkUser()){
             return $this->checkUser();
         }
 
-        $del_country = Country::where('id',$id)->update([
-            'show' => '0',
-            'responsible' => Auth::user()->firstname
-            ]);
+        $del_country = Country::find($request->id);
+        $del_country->responsible = Auth::user()->firstname;
+        $del_country->show = '0';
+        $del_country->save();
 
-            $args = array('delete' => '');
-            return redirect()->back()->with($args);
+            return response()->json();
     }
 
     public function coun_logs(){
+
+        if($this->checkUser()){
+            return $this->checkUser();
+        }
 
         $coun_logs = DB::table('countries')->orderBy('updated_at', 'DESC')->get();
 
@@ -486,9 +512,18 @@ class AdminController extends Controller
             return $this->checkUser();
         }
 
+            return view('admin.edit-fme');
+    }
+
+    public function fme_tbl(){
+
+        if($this->checkUser()){
+            return $this->checkUser();
+        }
+
         $fmes = DB::table('fmes')->select('id','name_number','show')->where('show','1')->get();
 
-            return view('admin.edit-fme', compact('fmes'));
+            return view('admin.show-fme', compact('fmes'));
     }
 
     public function add_fme(Request $request){
@@ -506,8 +541,8 @@ class AdminController extends Controller
 
         if($check){
 
-            $args = array('error' => '');
-                return redirect()->back()->with($args);  
+            $args = array('error' => 'error');
+                return response()->json($args);  
         }
 
         $fme = new Fme();
@@ -517,27 +552,23 @@ class AdminController extends Controller
 
         $fme->save();
 
-            $args = array('add' => '');
-            return redirect()->back()->with($args);
+            $args = array('save' => 'save');
+            return response()->json($args);
 
     }
 
-    public function view_fme($id){
+    public function view_fme(Request $request){
 
         if($this->checkUser()){
             return $this->checkUser();
         }
 
-        $id = Crypt::decrypt($id);
-        $fmes = Fme::where('id', $id)->first();
-
-        if(!$id){
-            return 'Sorry';
-        }
-            return view('admin.update-fme', compact('fmes'));        
+        if($request->ajax()){
+            return response(Fme::find($request->id));
+        }       
     }
 
-    public function update_fme(Request $request, $id){
+    public function update_fme(Request $request){
 
         if($this->checkUser()){
             return $this->checkUser();
@@ -552,36 +583,40 @@ class AdminController extends Controller
 
         if($check){
 
-            $args = array('error' => '');
-                return redirect()->back()->with($args);
+            $args = array('error' => 'error');
+                return response()->json($args);
 
         }
 
-        $fme = Fme::where('id', $id)->update([
-            'name_number' => $name,
-            'responsible' => Auth::user()->firstname
-            ]);
+        $fme = Fme::find($request->id);
+        $fme->name_number = $name;
+        $fme->responsible = Auth::user()->firstname;
+        $fme->save();
 
-            $args = array('update' => '');
-            return redirect()->back()->with($args);   
+            $args = array('update' => 'update');
+            return response()->json($args);   
     }
 
-    public function delete_fme($id){
+    public function delete_fme(Request $request){
 
         if($this->checkUser()){
             return $this->checkUser();
         }
 
-        $del_fme = Fme::where('id', $id)->update([
-            'show' => '0',
-            'responsible' => Auth::user()->firstname
-            ]); 
+        $del_fme = Fme::find($request->id);
+        $del_fme->responsible = Auth::user()->firstname;
+        $del_fme->show = '0';
+        $del_fme->save();
 
-            $args = array('delete' => '');
-            return redirect()->back()->with($args);       
+            return response()->json();
+      
     }
 
     public function fme_logs(){
+
+        if($this->checkUser()){
+            return $this->checkUser();
+        }
 
         $fme_logs = DB::table('fmes')->orderBy('updated_at','DESC')->get();
 
@@ -594,9 +629,18 @@ class AdminController extends Controller
             return $this->checkUser();
         }
 
+            return view('admin.edit-faqs');
+    }
+
+    public function faqs_tbl(){
+
+        if($this->checkUser()){
+            return $this->checkUser();
+        }
+
         $faqs = DB::table('faqs')->select('id','question','answer','show')->where('show','1')->get();
 
-            return view('admin.edit-faqs', compact('faqs'));
+            return view('admin.show-faqs', compact('faqs'));
     }
 
     public function add_faqs(Request $request){
@@ -615,38 +659,35 @@ class AdminController extends Controller
             $check = Faq::where('question',$que)->where('answer',$ans)->where('show','1')->exists();
 
             if($check){
-                $args = array('error' => '');
-                    return redirect()->back()->with($args);
+                $args = array('error' => 'error');
+                    return response()->json($args);
             }
 
             $faq = new Faq();
-            $faq->question = $que;
-            $faq->answer = $ans;
+            $faq->question = ucfirst($que);
+            $faq->answer = ucfirst($ans);
             $faq->responsible = Auth::user()->firstname;
             $faq->show = '1';
 
             $faq->save();
 
-            $args = array('add' => '');
-                return redirect()->back()->with($args);
+            $args = array('save' => 'save');
+                return response()->json($args);
     }
 
-    public function view_faqs($id){
+    public function view_faqs(Request $request){
 
         if($this->checkUser()){
             return $this->checkUser();
         }
 
-        $id = Crypt::decrypt($id);
-        $faqs = Faq::where('id', $id)->first();
+        if($request->ajax()){
 
-        if(!$id){
-            return 'Sorry';
+            return response(Faq::find($request->id));
         }
-            return view('admin.update-faqs',compact('faqs'));
     }
 
-    public function update_faqs(Request $request, $id){
+    public function update_faqs(Request $request){
 
         if($this->checkUser()){
             return $this->checkUser();
@@ -662,35 +703,39 @@ class AdminController extends Controller
 
         if($check){
 
-            $args = array('error' => '');
-                return redirect()->back()->with($args);
+            $args = array('error' => 'error');
+                return response()->json($args);
         }
 
-        $faqs = Faq::where('id',$id)->update([
-            'question' => $que,
-            'answer' => $ans,
-            'responsible' => Auth::user()->firstname
-            ]);
-        $args = array('update' => '');
-        return redirect()->back()->with($args);
+        $faqs = Faq::find($request->id);
+        $faqs->question = ucfirst($que);
+        $faqs->answer   = ucfirst($ans);
+        $faqs->responsible = Auth::user()->firstname;
+        $faqs->save();
+
+        $args = array('update' => 'update');
+        return response()->json($args);
     }
 
-    public function delete_faqs($id){
+    public function delete_faqs(Request $request){
 
         if($this->checkUser()){
             return $this->checkUser();
         }
 
-        $del_faq = Faq::where('id', $id)->update([
-            'show' => '0',
-            'responsible' => Auth::user()->firstname
-            ]);
+        $del_faq = Faq::find($request->id);
+        $del_faq->responsible = Auth::user()->firstname;
+        $del_faq->show = '0';
+        $del_faq->save();
 
-        $args = array('delete' => '');
-            return redirect()->back()->with($args);
+        return response()->json();
     }
 
     public function faqs_logs(){
+
+        if($this->checkUser()){
+            return $this->checkUser();
+        }
 
         $faq_logs = DB::table('faqs')->orderBy('updated_at', 'DESC')->get();
             return view('admin.faqs-logs', compact('faq_logs'));
@@ -702,9 +747,18 @@ class AdminController extends Controller
             return $this->checkUser();
         }
 
+            return view('admin.edit-dots');
+    }
+
+    public function dots_tbl(){
+
+        if($this->checkUser()){
+            return $this->checkUser();
+        }
+
         $dots = DB::table('dots')->select('id','question','answer','show')->where('show','1')->get();
 
-            return view('admin.edit-dots', compact('dots'));
+            return view('admin.show-dots', compact('dots'));
     }
 
     public function add_dots(Request $request){
@@ -724,34 +778,33 @@ class AdminController extends Controller
 
             if($check){
 
-            $args = array('error' => '');
-                return redirect()->back()->with($args);
+            $args = array('error' => 'error');
+                return response()->json($args);
 
             }
             $dots = new Dot();
-            $dots->question = $que;
-            $dots->answer   = $ans;
+            $dots->question = ucfirst($que);
+            $dots->answer   = ucfirst($ans);
             $dots->responsible = Auth::user()->firstname;
             $dots->show = '1';
 
             $dots->save();
 
-            $args = array('add' => '');
-            return redirect()->back()->with($args);
+            $args = array('save' => 'save');
+            return response()->json($args);
     }
-    public function view_dots($id){
+    public function view_dots(Request $request){
 
         if($this->checkUser()){
             return $this->checkUser();
         }
-        $id = Crypt::decrypt($id);
-        $dots = Dot::where('id', $id)->first();
-        if(!$id){
-            return 'Sorry';
+
+        if($request->ajax()){
+
+            return response(Dot::find($request->id));
         }
-            return view('admin.update-dots', compact('dots'));
     }
-    public function update_dots(Request $request, $id){
+    public function update_dots(Request $request){
 
         if($this->checkUser()){
             return $this->checkUser();
@@ -769,34 +822,33 @@ class AdminController extends Controller
 
         if($check){
 
-            $args = array('error' => '');
-                return redirect()->back()->with($args);
+            $args = array('error' => 'error');
+                return response()->json($args);
 
         }
-        $dot = Dot::where('id',$id)->update([
-            'question' => $que,
-            'answer' => $ans,
-            'responsible' => Auth::user()->firstname
-            ]);
+        $dot = Dot::find($request->id);
+        $dot->question = ucfirst($que);
+        $dot->answer   = ucfirst($ans);
+        $dot->responsible = Auth::user()->firstname;
+        $dot->save();
 
-            $args = array('update' => '');
-            return redirect()->back()->with($args);
+            $args = array('update' => 'update');
+            return response()->json($args);
     }
 
-    public function delete_dots($id){
+    public function delete_dots(Request $request){
 
         if($this->checkUser()){
             return $this->checkUser();
         }
 
 
-        $del_dots = Dot::where('id',$id)->update([
-            'show' => '0',
-            'responsible' => Auth::user()->firstname
-            ]);
+        $del_dots = Dot::find($request->id);
+        $del_dots->responsible = Auth::user()->firstname;
+        $del_dots->show = '0';
+        $del_dots->save();
 
-            $args = array('delete' => '');
-            return redirect()->back()->with($args);
+            return response()->json();
     }
 
     public function dots_logs(){
@@ -859,9 +911,9 @@ class AdminController extends Controller
     		'role'    => 'required'
     		]);
 
-    		$last    = $request['last'];
-    		$first   = $request['first'];
-    		$middle  = $request['middle'];
+    		$last    = ucfirst($request['last']);
+    		$first   = ucfirst($request['first']);
+    		$middle  = ucfirst($request['middle']);
     		$user    = $request['user'];
     		$pass    = bcrypt($request['pass']);
     		$role    = $request['role'];
@@ -872,8 +924,8 @@ class AdminController extends Controller
 
             if($check){
 
-            $args = array('error' =>'');
-               return redirect()->back()->with($args);
+            $args = array('error' =>'error');
+               return response()->json($args);
 
             }
 
@@ -890,8 +942,8 @@ class AdminController extends Controller
 
     	       $member->save();
 
-                $args = array('info' =>'');
-    	       return redirect()->back()->with($args);
+                $args = array('save' =>'save');
+    	       return response()->json($args);
 
     }
 
@@ -1008,6 +1060,10 @@ class AdminController extends Controller
 
     public function meat_logs(){
 
+        if($this->checkUser()){
+            return $this->checkUser();
+        }
+
         $meat_logs = DB::table('meat_cuts')->orderBy('updated_at','DESC')->get();
 
             return view('admin.meat-logs', compact('meat_logs'));
@@ -1037,19 +1093,36 @@ class AdminController extends Controller
 
     public function show_users(){
 
+        if($this->checkUser()){
+            return $this->checkUser();
+        }
+
+            return view('admin.users');
+    }
+
+    public function user_tbl(){
+
+        if($this->checkUser()){
+            return $this->checkUser();
+        }
+
         $users = DB::table('users')->select('id','lastname','firstname','middlename','username','role','status','show')->where('show','1')->get();
 
-            return view('admin.users', compact('users'));
+            return view('admin.show-user', compact('users'));
     }
 
     public function user_logs(){
+
+        if($this->checkUser()){
+            return $this->checkUser();
+        }
 
         $user_logs = DB::table('users')->orderBy('updated_at', 'DESC')->get();
 
             return view('admin.user-logs', compact('user_logs'));
     }
 
-    public function edit_users($id){
+    public function edit_users(Request $request, $id){
 
         if($this->checkUser()){
             return $this->checkUser();
@@ -1080,9 +1153,9 @@ class AdminController extends Controller
 
 
         $country = User::where('id',$id)->update([
-            'lastname' => $last,
-            'firstname' => $first,
-            'middlename' => $middle,
+            'lastname' => ucfirst($last),
+            'firstname' => ucfirst($first),
+            'middlename' => ucfirst($middle),
             'status' => $status,
             'responsible' => Auth::user()->firstname
             ]);

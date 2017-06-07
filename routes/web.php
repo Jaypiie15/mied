@@ -11,7 +11,7 @@
 |
 */
 
-
+//login
 Route::get('/', [
 	'as'=> 'index',
 	'uses'=> 'AuthController@login'
@@ -20,7 +20,7 @@ Route::post('/login',[
 	'as' => 'login',
 	'uses' => 'AuthController@after_login'
 ]);
-
+//user
 Route::get('/auth/main',[
 	'as' => 'main',
 	'uses' => 'UserController@main'
@@ -45,7 +45,7 @@ Route::get('/auth/show-faqs',[
 	'as' => 'show-faqs',
 	'uses' => 'UserController@show_faqs'
 ]);
-
+//admin
 Route::get('/admin/logout',[
 	'as' => 'admin-logout',
 	'uses' => 'AuthController@logout'
@@ -53,10 +53,6 @@ Route::get('/admin/logout',[
 Route::get('/admin/dashboard',[
 	'as' => 'dashboard',
 	'uses' => 'AdminController@count'
-]);
-Route::get('/admin/register', [
-	'as'=> 'register',
-	'uses'=> 'AdminController@register'
 ]);
 Route::get('/admin/add-meatcut', [
 	'as' => 'add-meatcuts',
@@ -70,33 +66,65 @@ Route::get('/admin/edit-commodity',[
 	'as' => 'edit-commodity',
 	'uses' => 'AdminController@show_com'
 ]);
+Route::get('/admin/editcom', [
+	'as'=> 'com-tbl',
+	'uses'=> 'AdminController@com_tbl'
+]);
 Route::get('/admin/edit-cut',[
 	'as' => 'edit-cut',
 	'uses' => 'AdminController@show_cut'
+]);
+Route::get('/admin/editcut',[
+	'as' => 'cut-tbl',
+	'uses' => 'AdminController@cut_tbl'
 ]);
 Route::get('/admin/edit-hscode',[
 	'as' => 'edit-hscode',
 	'uses' => 'AdminController@show_hscode'
 ]);
+Route::get('/admin/editcode',[
+	'as' => 'code-tbl',
+	'uses' => 'AdminController@code_tbl'
+]);
 Route::get('/admin/edit-country',[
 	'as' => 'edit-country',
 	'uses' => 'AdminController@show_country'
+]);
+Route::get('/admin/editcoun',[
+	'as' => 'coun-tbl',
+	'uses' => 'AdminController@coun_tbl'
 ]);
 Route::get('/admin/edit-fme',[
 	'as' => 'edit-fme',
 	'uses' => 'AdminController@show_fme'
 ]);
+Route::get('/admin/editfme',[
+	'as' => 'fme-tbl',
+	'uses' => 'AdminController@fme_tbl'
+]);
 Route::get('/admin/edit-dots',[
 	'as' => 'edit-dots',
 	'uses' => 'AdminController@show_dots'
+]);
+Route::get('/admin/eidtdots',[
+	'as' => 'dots-tbl',
+	'uses' => 'AdminController@dots_tbl'
 ]);
 Route::get('/admin/edit-faqs',[
 	'as' => 'edit-faqs',
 	'uses' => 'AdminController@show_faqs'
 ]);
+Route::get('/admin/editfaqs',[
+	'as' => 'faqs-tbl',
+	'uses' => 'AdminController@faqs_tbl'
+]);
 Route::get('/admin/users',[
 	'as' => 'show-users',
 	'uses' => 'AdminController@show_users'
+]);
+Route::get('/admin/showuser',[
+	'as' => 'user-tbl',
+	'uses' => 'AdminController@user_tbl'
 ]);
 Route::get('/admin/com-logs',[
 	'as' => 'com-logs',
@@ -135,7 +163,7 @@ Route::get('/admin/faq-logs',[
 	'uses' => 'AdminController@faqs_logs'
 ]);
 
-
+//admin with view id
 Route::get('/admin/view-meat/{code}',[
 	'as' => 'view-meat',
 	'uses' => 'AdminController@view_meat'
@@ -148,61 +176,33 @@ Route::get('/admin/delete-meatcut/{id}',[
 	'as'=> 'delete-meatcut',
 	'uses'=> 'AdminController@delete_meat'
 ]);
-Route::get('/admin/update-commodity/{id}',[
+Route::get('/admin/update-commodity',[
 	'as' => 'update-commodity',
 	'uses' => 'AdminController@view_com'
 ]);
-Route::get('/admin/delete-commodity/{id}',[
-	'as' => 'delete-commodity',
-	'uses' => 'AdminController@delete_com'
-]);
-Route::get('/admin/update-cut_type/{id}',[
+Route::get('/admin/update-cut_type',[
 	'as' => 'update-cut_type',
 	'uses' => 'AdminController@view_cut'
 ]);
-Route::get('/admin/delete-cut_type/{id}',[
-	'as' => 'delete-cut_type',
-	'uses' => 'AdminController@delete_cut'
-]);
-Route::get('/admin/update-hscode/{id}',[
+Route::get('/admin/update-hscode',[
 	'as' => 'update-hscode',
 	'uses' => 'AdminController@view_hscode'
 ]);
-Route::get('/admin/delete-hscode/{id}',[
-	'as' => 'delete-hscode',
-	'uses' => 'AdminController@delete_hscode'
-]);
-Route::get('/admin/update-country/{id}',[
+Route::get('/admin/update-country',[
 	'as' => 'update-country',
 	'uses' => 'AdminController@view_country'
 ]);
-Route::get('/admin/update-fmes/{id}',[
+Route::get('/admin/update-fmes',[
 	'as' => 'update-fmes',
 	'uses' => 'AdminController@view_fme'
 ]);
-Route::get('/admin/delete-fme/{id}',[
-	'as' => 'delete-fme',
-	'uses' => 'AdminController@delete_fme'
-]);
-Route::get('/admin/delete-country/{id}',[
-	'as' => 'delete-country',
-	'uses' => 'AdminController@delete_country'
-]);
-Route::get('/admin/update-dots/{id}',[
+Route::get('/admin/update-dots',[
 	'as' => 'update-dots',
 	'uses' => 'AdminController@view_dots'
 ]);
-Route::get('/admin/update-faqs/{id}',[
+Route::get('/admin/update-faqs',[
 	'as' => 'update-faqs',
 	'uses' => 'AdminController@view_faqs'
-]);
-Route::get('/admin/delete-faqs/{id}',[
-	'as' => 'delete-faqs',
-	'uses' => 'AdminController@delete_faqs'
-]);
-Route::get('/admin/delete-dots/{id}',[
-	'as' => 'delete-dots',
-	'uses' => 'AdminController@delete_dots'
 ]);
 Route::get('/admin/edit-users/{id}',[
 	'as' => 'edit-users',
@@ -228,41 +228,61 @@ Route::post('/admin/update-meat/{id}',[
 	'as' => 'update-meat',
 	'uses' => 'AdminController@update_meat'
 ]);
-Route::post('/admin/update-commodity/{id}',[
+Route::post('/admin/update-commodity',[
 	'as' => 'update-com',
 	'uses' => 'AdminController@update_com'
+]);
+Route::post('/admin/delete-commodity',[
+	'as' => 'delete-commodity',
+	'uses' => 'AdminController@delete_com'
 ]);
 Route::post('/admin/add-cut',[
 	'as' => 'add-cut',
 	'uses' => 'AdminController@add_cut'
 ]);
-Route::post('/admin/update-cut_type/{id}',[
+Route::post('/admin/update-cut_type',[
 	'as' => 'update_cut',
 	'uses' => 'AdminController@update_cut'
+]);
+Route::post('/admin/delete-cut_type',[
+	'as' => 'delete-cut_type',
+	'uses' => 'AdminController@delete_cut'
 ]);
 Route::post('/admin/add-hscode',[
 	'as' => 'add-code',
 	'uses' => 'AdminController@add_hscode'
 ]);
-Route::post('/admin/update-hscode/{id}',[
+Route::post('/admin/update-hscode',[
 	'as' => 'update-code',
 	'uses' => 'AdminController@update_hscode'
+]);
+Route::post('/admin/delete-hscode',[
+	'as' => 'delete-hscode',
+	'uses' => 'AdminController@delete_hscode'
 ]);
 Route::post('/admin/add-country',[
 	'as' => 'add-country',
 	'uses' => 'AdminController@add_country'
 ]);
-Route::post('/admin/update-country/{id}',[
+Route::post('/admin/update-country',[
 	'as' => 'update-coun',
 	'uses' => 'AdminController@update_country'
+]);
+Route::post('/admin/delete-country',[
+	'as' => 'delete-country',
+	'uses' => 'AdminController@delete_country'
 ]);
 Route::post('/admin/add-fme',[
 	'as' => 'add-fme',
 	'uses' => 'AdminController@add_fme'
 ]);
-Route::post('/admin/update-fme/{id}',[
+Route::post('/admin/update-fme',[
 	'as' => 'update-fme',
 	'uses' => 'AdminController@update_fme'
+]);
+Route::post('/admin/delete-fme',[
+	'as' => 'delete-fme',
+	'uses' => 'AdminController@delete_fme'
 ]);
 Route::post('/admin/add-dots', [
 	'as' => 'add-dots',
@@ -272,13 +292,21 @@ Route::post('/admin/add-faqs',[
 	'as' => 'add-faqs',
 	'uses' => 'AdminController@add_faqs'
 ]);
-Route::post('/admin/update-dots/{id}', [
+Route::post('/admin/update-dots', [
 	'as' => 'update-dot',
 	'uses' => 'AdminController@update_dots'
 ]);
-Route::post('/admin/update-faqs/{id}',[
+Route::post('/admin/delete-dots',[
+	'as' => 'delete-dots',
+	'uses' => 'AdminController@delete_dots'
+]);
+Route::post('/admin/update-faqs',[
 	'as' => 'update-faq',
 	'uses' => 'AdminController@update_faqs'
+]);
+Route::post('/admin/delete-faqs',[
+	'as' => 'delete-faqs',
+	'uses' => 'AdminController@delete_faqs'
 ]);
 Route::post('/admin/update-users/{id}',[
 	'as' => 'update-user',

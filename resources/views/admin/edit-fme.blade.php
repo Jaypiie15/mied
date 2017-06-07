@@ -24,22 +24,13 @@
 
     <!-- Main content -->
     <section class="content">
-  @if(Session::has('add'))
-    <script>swal("SUCCESS","FME Name & Number Added!","success")</script>
-  @endif
-    @if(Session::has('delete'))
-    <script>swal("SUCCESS","FME Name & Number Deleted!","success")</script>
-  @endif
-    @if(Session::has('error'))
-    <script>swal("ERROR","FME Name & Number Already Exists!","error")</script>
-  @endif
       <!-- Default box -->
       <div class="box">
         <div class="box-body">
-        <form method="POST" action="{{ route('add-fme') }}" data-parsley-validate>
+        <form method="POST" action="{{ route('add-fme') }}" id="insert-fme" data-parsley-validate>
        
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-plus"></i> Add FME Name & Number</button>
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addfme-modal"><i class="fa fa-plus"></i> Add FME Name & Number</button>
+<div class="modal fade" id="addfme-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -61,10 +52,67 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         <button type="submit" name="btn-add" class="btn btn-primary">Submit</button>
-        {{csrf_field()}}
+
          </form>
         
 
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- modal edit -->
+<form action="{{ route('update-fme') }}" method="POST" id="update-fme" data-parsley-validate>
+<div class="modal fade" id="modal-fme" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel"><i class="fa fa-pencil"></i> Edit Country</h4>
+      </div>
+      <div class="modal-body">
+
+          <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
+            <label for="message-text" class="control-label">Edit FME Name & Number</label>
+            <input type="hidden" name="id" id="id">
+             <input type="text" class="form-control" name="name" id="name" required data-parsley-length="[2, 100]">
+          @if($errors->has('name'))
+          <span class="help-block">{{ $errors->first('name') }}</span>
+        @endif
+          </div>
+       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        
+         </form>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<form action="{{ route('delete-fme') }}" method="POST" id="delete-fme" data-parsley-validate>
+<div class="modal fade" id="delete-fmen" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel"><i class="fa fa-trash"></i> Delete Country</h4>
+      </div>
+      <div class="modal-body">
+              <input type="hidden" name="id" id="id">
+             <input type="hidden" name="name" id="name">
+        Are you sure you want to delete this?
+       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> Yes, Delete it</button>
+        
+         </form>
         
       </div>
     </div>
@@ -75,29 +123,173 @@
 
 
       <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
-        <thead>
-          <tr>
-            <th>Question</th>
-            <th>Answer</th>
-            <th>Action</th>
-        </thead>
-        <tbody>
-          <tr>
-            
-            @foreach($fmes as $fme)
-            <td>{{$fme->name_number}}</td>
-            <td>
-            <a href="{{ route('update-fmes', ['id'=> Crypt::encrypt($fme->id) ]) }}" class="btn btn-primary"><i class="fa fa-pencil"></i> Edit</a>
-            <button id="delete" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</button>
-            <form id="del-func" action="{{ route('delete-fme', ['id'=>$fme->id]) }}">
-            </td>
-          </tr>
-          @endforeach
-          
-        </tbody>
+
       </table>
 
     </form>
+
+<script src="{{ asset('resources/src/plugins/jQuery/jquery-2.2.3.min.js') }}"></script>
+
+
+<script type="text/javascript">
+
+      //add
+        $(document).ready(function(){
+            $.ajaxSetup({
+              headers:{
+                'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+              }
+            });
+        });
+
+        $('#insert-fme').on('submit',function(e){
+          e.preventDefault();
+          var route = $(this).attr('action');
+          var data  = $(this).serialize();
+
+          $.ajax({
+            dataType : 'json',
+            type : "POST",
+            url: route,
+            data: data,
+            success:function(data){
+              if($.trim(data.save) == 'save'){
+              $("#addfme-modal").modal('hide');
+
+              new PNotify({
+                  title: 'Success!',
+                  text: 'FME Name & Number Added!',
+                  type: 'success',
+                  styling: 'bootstrap3'
+                });
+              $("#insert-fme").trigger('reset');
+              read();
+            }
+            else{
+                  new PNotify({
+                  title: 'Oh No!',
+                  text: 'FME Name & Number Already Exists!',
+                  type: 'error',
+                  styling: 'bootstrap3'
+                });
+                $("#insert-fme").trigger('reset');
+              }
+            }
+          })
+        })
+
+    //read
+
+      read();
+      
+      function read(){
+          $.ajax({  
+            type : 'get',
+            url : "{{ route('fme-tbl')}}",
+            dataType : 'html',
+              success:function(data){
+                  $('#datatable-responsive').html(data);
+                }
+              })
+            }
+
+    //show-edit
+
+    $(document).on('click','.btn-editfme',function(e){
+        var id = $(this).val();
+        $.ajax({
+          type : 'get',
+          url : "{{ route('update-fmes') }}",
+          data : {id:id},
+          success:function(data)
+          {
+            var fmeupdate = $('#update-fme');
+            fmeupdate.find('#id').val(data.id);
+            fmeupdate.find('#name').val(data.name_number);
+            $('#modal-fme').modal('show');
+          }
+        })
+    })
+
+   //show -delete
+        $(document).on('click','.btn-deletefme',function(e){
+        var id = $(this).val();
+        $.ajax({
+          type : 'get',
+          url : "{{ route('update-fmes') }}",
+          data : {id:id},
+          success:function(data)
+          {
+            var counupdate = $('#delete-fme');
+            counupdate.find('#id').val(data.id);
+            counupdate.find('#country').val(data.name_number);
+            $('#delete-fmen').modal('show');
+          }
+        })
+    })
+
+   //update
+        $('#update-fme').on('submit',function(e){
+          e.preventDefault();
+          var route = $(this).attr('action');
+          var data  = $(this).serialize();
+
+          $.ajax({
+            dataType : 'json',
+            type : "POST",
+            url: route,
+            data: data,
+            success:function(data){
+              if($.trim(data.update) == 'update'){
+              $("#modal-fme").modal('hide');
+
+              new PNotify({
+                  title: 'Success!',
+                  text: 'FME Name & Number Updated!',
+                  type: 'success',
+                  styling: 'bootstrap3'
+                });
+              read();
+            }
+            else{
+                  new PNotify({
+                  title: 'Oh No!',
+                  text: 'FME Name & Number Already Exists!',
+                  type: 'error',
+                  styling: 'bootstrap3'
+                });
+                $("#update-fme").trigger('reset');
+              }
+            }
+          })
+        })
+
+      //delete
+        $('#delete-fme').on('submit',function(e){
+          e.preventDefault();
+          var route = $(this).attr('action');
+          var data  = $(this).serialize();
+
+          $.ajax({
+            dataType : 'json',
+            type : "POST",
+            url: route,
+            data: data,
+            success:function(data){
+              $("#delete-fmen").modal('hide');
+
+              new PNotify({
+                  title: 'Success!',
+                  text: 'FME Name & Number Deleted!',
+                  type: 'success',
+                  styling: 'bootstrap3'
+                });
+              read();
+            }
+          })
+        })
+ 
+</script>
 @endsection
 
  

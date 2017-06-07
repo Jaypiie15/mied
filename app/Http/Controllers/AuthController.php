@@ -15,7 +15,7 @@ class AuthController extends Controller
 
 
     public function login(){
-        if( Auth::check() ){
+        if(Auth::check() ){
             if(Auth::user()->role == '0'){
                 return redirect()->intended('/admin/dashboard');
              }

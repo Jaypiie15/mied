@@ -80,17 +80,11 @@
           </ul>
         </li>
 
-        <li class="treeview">
-          <a href="#">
+        <li>
+          <a href="{{ route('show-users') }}">
             <i class="fa fa-users"></i> <span>Users</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
+
           </a>
-          <ul class="treeview-menu">
-            <li><a href="{{ route('show-users') }}"><i class="fa fa-circle-o"></i> Administrators</a></li>
-            <li><a href="{{ route('register') }}"><i class="fa fa-circle-o"></i> Add Users</a></li>
-          </ul>
         </li>
 
         <li>

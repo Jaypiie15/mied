@@ -29,7 +29,7 @@ class UserController extends Controller
     	 if($this->checkUser()){
             return $this->checkUser();
         }
-    	$meatss = DB::table('meat_cuts')->select('kind','cut_type','hscode','name_number','remarks','country') ->get();
+    	$meatss = DB::table('meat_cuts')->select('kind','cut_type','hscode','name_number','remarks','country')->get();
 
     		return view('auth.main', compact('meatss'));
     }
