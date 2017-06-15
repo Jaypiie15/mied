@@ -83,7 +83,7 @@ Imported Meat Catalogue
 
           <div class="form-group {{ $errors->has('cpass') ? 'has-error' : '' }}">
             <label for="message-text" class="control-label">Repeat Password:</label>
-             <input type="text" class="form-control" name="cpass" required data-parsley-length="[2, 100]" data-parsley-equalto="#pass">
+             <input type="password class="form-control" name="cpass" required data-parsley-length="[2, 100]" data-parsley-equalto="#pass">
           @if($errors->has('cpass'))
           <span class="help-block">{{ $errors->first('cpass') }}</span>
         @endif

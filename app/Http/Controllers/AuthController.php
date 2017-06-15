@@ -49,16 +49,18 @@ class AuthController extends Controller
             $this->clearLoginAttempts($request);
 
              if(Auth::user()->role == '0'){
-                return redirect()->intended('/admin/dashboard');
+                $args = array('role' => 'admin');
+                return response()->json($args);
              }
             elseif(Auth::user()->role == '1'){
-                return redirect()->intended('/auth/main');
+                $args = array('role' => 'user');
+                return response()->json($args);
              }
                 
         }else{
             $this->incrementLoginAttempts($request);
-            $args = array('error' => '');
-                return redirect()->back()->with($args);
+            $args = array('role' => 'error');
+                return response()->json($args);
             
         }
 

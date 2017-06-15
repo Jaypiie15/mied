@@ -1152,7 +1152,7 @@ class AdminController extends Controller
         $status = $request['status'];
 
 
-        $country = User::where('id',$id)->update([
+        $user = User::where('id',$id)->update([
             'lastname' => ucfirst($last),
             'firstname' => ucfirst($first),
             'middlename' => ucfirst($middle),

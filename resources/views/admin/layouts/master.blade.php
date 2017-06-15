@@ -24,6 +24,10 @@
       <!-- PNotify -->
     <link href="{{ asset('resources/src/plugins/pnotify/dist/pnotify.css') }}" rel="stylesheet">
 
+  <link rel="stylesheet" href="{{ asset('resources/src/build/sweetalert.css') }}">
+  <script type="text/javascript" src="{{ asset('resources/src/build/sweetalert-dev.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('resources/src/build/sweetalert.min.js') }}"></script>
+
 
   <link href="{{ asset('resources/src/plugins/datatables.net-bs/css/dataTables.bootstrap.min.css') }}" rel="stylesheet">
   <link href="{{ asset('resources/src/plugins/datatables.net-buttons-bs/css/buttons.bootstrap.min.css') }}" rel="stylesheet">

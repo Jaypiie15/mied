@@ -6,9 +6,7 @@
   <title>@yield('title')</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <meta http-equiv="cache-control" content="private, max-age=0, no-cache">
-  <meta http-equiv="pragma" content="no-cache">
-  <meta http-equiv="expires" content="0"> 
+  <meta id="token" name="csrf-token" content="{{csrf_token()}}">
   <!-- Bootstrap 3.3.6 -->
   <link rel="stylesheet" href="{{ asset('resources/src/bootstrap/css/bootstrap.min.css') }}">
   <!-- Font Awesome -->
@@ -21,9 +19,9 @@
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="{{ asset('resources/src/dist/css/skins/_all-skins.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('resources/src/build/sweetalert.css') }}">
-  <script type="text/javascript" src="{{ asset('resources/src/build/sweetalert-dev.js') }}"></script>
-  <script type="text/javascript" src="{{ asset('resources/src/build/sweetalert.min.js') }}"></script>
+
+        <!-- PNotify -->
+    <link href="{{ asset('resources/src/plugins/pnotify/dist/pnotify.css') }}" rel="stylesheet">
   <link rel="stylesheet" href="{{ asset('resources/src/plugins/parsleyjs/src/parsley.css') }}">
 
   <link href="{{ asset('resources/src/plugins/datatables.net-bs/css/dataTables.bootstrap.min.css') }}" rel="stylesheet">
@@ -90,6 +88,9 @@
 <script src="{{ asset('resources/src/dist/js/app.min.js') }}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('resources/src/dist/js/demo.js') }}"></script>
+
+    <!-- PNotify -->
+    <script src="{{ asset('resources/src/plugins/pnotify/dist/pnotify.js') }}"></script>
 
 <script src="{{ asset('resources/src/plugins/datatables.net/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('resources/src/plugins/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
