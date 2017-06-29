@@ -83,7 +83,7 @@
                 window.location.href = "{{ route('main') }}";
                 break;
 
-                case 'error':
+                default:
                   new PNotify({
                   title: 'Oh No!',
                   text: 'Error Username or Password',
@@ -91,9 +91,6 @@
                   styling: 'bootstrap3'
                 });
                   $("#login").trigger('reset');
-                break;
-
-                default:
                 break;
               }
             }

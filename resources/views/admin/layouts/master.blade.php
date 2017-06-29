@@ -6,7 +6,7 @@
   <title>@yield('title')</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <meta id="token" name="csrf-token" content="{{csrf_token()}}">
+  <meta id="token" name="csrf-token" content="{{ csrf_token() }}">
   <!-- Bootstrap 3.3.6 -->
   <link rel="stylesheet" href="{{ asset('resources/src/bootstrap/css/bootstrap.min.css') }}">
   <!-- Font Awesome -->
@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('resources/src/dist/css/AdminLTE.min.css') }}">
-  <link href="{{ asset('resources/src/plugins/animate.css/animate.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('resources/src/plugins/animate.min.css') }}" rel="stylesheet">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="{{ asset('resources/src/dist/css/skins/_all-skins.min.css') }}">
